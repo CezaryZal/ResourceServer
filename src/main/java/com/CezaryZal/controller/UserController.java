@@ -2,7 +2,9 @@ package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.User;
 
+import java.util.Optional;
+
 public interface UserController {
 
-    User getUser(Long id);
+    Optional<User> findById(Long id);
 }
