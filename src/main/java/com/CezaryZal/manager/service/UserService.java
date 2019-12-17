@@ -7,4 +7,12 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> findById(Long index);
+
+    Iterable<User> findAll();
+
+    User addNewUser(User user);
+
+    User updateUser(User user);
+
+    void deleteUser(Long index);
 }

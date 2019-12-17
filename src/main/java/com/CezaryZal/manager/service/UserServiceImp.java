@@ -15,8 +15,23 @@ public class UserServiceImp implements UserService {
         this.userRepository = userRepository;
     }
 
-    @Override
     public Optional<User> findById(Long index) {
         return userRepository.findById(index);
+    }
+
+    public Iterable<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User addNewUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(Long index) {
+        userRepository.deleteById(index);
     }
 }
