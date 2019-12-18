@@ -8,6 +8,8 @@ public interface UserService {
 
     Optional<User> findById(Long index);
 
+    Optional<User> findByLoginName(String loginName);
+
     Iterable<User> findAll();
 
     User addNewUser(User user);

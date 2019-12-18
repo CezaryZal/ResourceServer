@@ -21,6 +21,11 @@ public class UserControllerImp implements UserController {
         return userService.findById(index);
     }
 
+    @GetMapping("/name/{loginName}")
+    public Optional<User> findByLoginName(@PathVariable String loginName){
+        return userService.findByLoginName(loginName);
+    }
+
     @GetMapping
     public Iterable<User> findAll() {
         return userService.findAll();

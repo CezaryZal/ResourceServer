@@ -8,6 +8,8 @@ public interface UserController {
 
     Optional<User> findById(Long id);
 
+    Optional<User> findByLoginName(String loginName);
+
     Iterable<User> findAll();
 
     User addNewUser(User user);

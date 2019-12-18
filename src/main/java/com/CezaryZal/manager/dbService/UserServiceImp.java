@@ -19,6 +19,10 @@ public class UserServiceImp implements UserService {
         return userRepository.findById(index);
     }
 
+    public Optional<User> findByLoginName(String loginName){
+        return userRepository.findByLoginName(loginName);
+    }
+
     public Iterable<User> findAll() {
         return userRepository.findAll();
     }
