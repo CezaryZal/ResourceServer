@@ -17,7 +17,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public User getTokenByUserLogin(@RequestBody UserLogin inputUserLogin){
+    public String getTokenByUserLogin(@RequestBody UserLogin inputUserLogin){
         return apiService.getTokenByUserLogin(inputUserLogin);
     }
 

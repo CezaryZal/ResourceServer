@@ -2,6 +2,7 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
+import com.CezaryZal.manager.builder.BuilderToken;
 import com.CezaryZal.manager.dbService.UserService;
 import com.CezaryZal.manager.validator.Validator;
 import org.springframework.stereotype.Service;
@@ -11,19 +12,21 @@ public class ApiService {
 
     private UserService userService;
     private Validator validator;
+    private BuilderToken builderToken;
 
     private User foundUser;
 
-    public ApiService(UserService userService, Validator validator) {
+    public ApiService(UserService userService, Validator validator, BuilderToken builderToken) {
         this.userService = userService;
         this.validator = validator;
+        this.builderToken = builderToken;
     }
 
-    public User getTokenByUserLogin(UserLogin inputUserLogin) {
+    public String getTokenByUserLogin(UserLogin inputUserLogin) {
         findUserByInputLogin(inputUserLogin);
         validator.setFoundUser(foundUser);
         if (validator.validInputLogin(inputUserLogin)){
-            return foundUser;
+            return builderToken.buildTokenByUser(foundUser);
         }
         throw new RuntimeException("Błedne hasło użytkownika");
     }
