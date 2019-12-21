@@ -2,7 +2,7 @@ package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
-import com.CezaryZal.manager.validator.Validator;
+import com.CezaryZal.manager.ApiService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    private Validator validator;
+    private ApiService apiService;
 
-    public LoginController(Validator validator) {
-        this.validator = validator;
+    public LoginController(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     @PostMapping("/login")
-    public User getToken(@RequestBody UserLogin userLogin){
-        return validator.findUserByInputLogin(userLogin);
+    public User getTokenByUserLogin(@RequestBody UserLogin inputUserLogin){
+        return apiService.getTokenByUserLogin(inputUserLogin);
     }
 
 }
