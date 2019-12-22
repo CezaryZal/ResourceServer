@@ -1,4 +1,4 @@
-package com.CezaryZal.manager.ServerUser;
+package com.CezaryZal.manager.user.server;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.manager.db.service.UserService;
