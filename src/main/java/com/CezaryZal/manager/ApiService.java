@@ -2,38 +2,42 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
+import com.CezaryZal.manager.ServerUser.SearcherInDb;
 import com.CezaryZal.manager.builder.BuilderToken;
-import com.CezaryZal.manager.dbService.UserService;
-import com.CezaryZal.manager.validator.Validator;
+import com.CezaryZal.manager.db.service.UserService;
+import com.CezaryZal.manager.filters.Validator;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class ApiService {
 
-    private UserService userService;
+    private SearcherInDb searcherInDb;
     private Validator validator;
     private BuilderToken builderToken;
 
     private User foundUser;
 
-    public ApiService(UserService userService, Validator validator, BuilderToken builderToken) {
-        this.userService = userService;
+    public ApiService(SearcherInDb searcherInDb, Validator validator, BuilderToken builderToken) {
+        this.searcherInDb = searcherInDb;
         this.validator = validator;
         this.builderToken = builderToken;
     }
 
     public String getTokenByUserLogin(UserLogin inputUserLogin) {
-        findUserByInputLogin(inputUserLogin);
-        validator.setFoundUser(foundUser);
+        foundUser = searcherInDb.findByLoginName(inputUserLogin.getLogin());
+        handleUserByActive();
+        validator.setFoundUser(this.foundUser);
         if (validator.validInputLogin(inputUserLogin)){
-            return builderToken.buildTokenByUser(foundUser);
+            return builderToken.buildTokenByUser(this.foundUser);
         }
         throw new RuntimeException("Błedne hasło użytkownika");
     }
 
-    private void findUserByInputLogin(UserLogin userLogin) {
-        foundUser = userService.findByLoginName(userLogin.getLogin())
-                .orElseThrow(() -> new RuntimeException("Poszukiwany użtykownik nie istnieje"));
+    private void handleUserByActive(){
+        if (!foundUser.isActive()){
+            throw new RuntimeException("Przesłany formularz jest pusty");
+        }
     }
 
 }

@@ -18,7 +18,7 @@ public class BuilderToken {
                 .builder()
                 .setSubject("Subject")
                 .claim("name", foundUser.getLoginName())
-                .claim("role", "ADMIN")
+                .claim("role", foundUser.getRoles())
                 .setIssuedAt(new Date(currentTimeMillis))
                 .setExpiration(new Date(currentTimeMillis + 30000000))
                 .signWith(SignatureAlgorithm.HS384, secret.getBytes())

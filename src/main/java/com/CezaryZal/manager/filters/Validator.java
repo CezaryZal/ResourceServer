@@ -1,4 +1,4 @@
-package com.CezaryZal.manager.validator;
+package com.CezaryZal.manager.filters;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;

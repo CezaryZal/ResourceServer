@@ -1,7 +1,7 @@
 package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.User;
-import com.CezaryZal.manager.dbService.UserService;
+import com.CezaryZal.manager.db.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
