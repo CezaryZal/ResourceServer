@@ -4,8 +4,6 @@ import com.CezaryZal.entity.User;
 import com.CezaryZal.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserServiceImp implements UserService {
 
@@ -15,12 +13,14 @@ public class UserServiceImp implements UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findById(Long index) {
-        return userRepository.findById(index);
+    public User findById(Long index) {
+        return userRepository.findById(index)
+                .orElseThrow(() -> new RuntimeException("Poszukiwany użtykownik nie istnieje"));
     }
 
-    public Optional<User> findByLoginName(String loginName){
-        return userRepository.findByLoginName(loginName);
+    public User findByLoginName(String loginName){
+        return userRepository.findByLoginName(loginName)
+                .orElseThrow(() -> new RuntimeException("Poszukiwany użtykownik nie istnieje"));
     }
 
     public Iterable<User> findAll() {

@@ -4,8 +4,6 @@ import com.CezaryZal.entity.User;
 import com.CezaryZal.manager.db.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/admin/user")
 public class UserControllerImp implements UserController {
@@ -17,12 +15,12 @@ public class UserControllerImp implements UserController {
     }
 
     @GetMapping("/{index}")
-    public Optional<User> findById(@PathVariable Long index) {
+    public User findById(@PathVariable Long index) {
         return userService.findById(index);
     }
 
     @GetMapping("/name/{loginName}")
-    public Optional<User> findByLoginName(@PathVariable String loginName){
+    public User findByLoginName(@PathVariable String loginName){
         return userService.findByLoginName(loginName);
     }
 

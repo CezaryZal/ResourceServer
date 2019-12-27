@@ -1,8 +1,7 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
-import com.CezaryZal.manager.ApiService;
+import com.CezaryZal.manager.LoginService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    private ApiService apiService;
+    private LoginService loginService;
 
-    public LoginController(ApiService apiService) {
-        this.apiService = apiService;
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     @PostMapping("/login")
     public String getTokenByUserLogin(@RequestBody UserLogin inputUserLogin){
-        return apiService.getTokenByUserLogin(inputUserLogin);
+        return loginService.getTokenByUserLogin(inputUserLogin);
     }
 
 }

@@ -2,42 +2,42 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
-import com.CezaryZal.manager.filters.ParseInput;
-import com.CezaryZal.manager.user.server.SearcherInDb;
-import com.CezaryZal.manager.builder.BuilderToken;
+import com.CezaryZal.manager.db.service.UserServiceImp;
+import com.CezaryZal.manager.filters.FormValidator;
+import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.Validator;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class ApiService {
+public class LoginService {
 
-    private SearcherInDb searcherInDb;
+    private UserServiceImp userServiceImp;
     private Validator validator;
-    private BuilderToken builderToken;
-    private ParseInput parseInput;
+    private TokenBuilder tokenBuilder;
+    private FormValidator formValidator;
 
     private User foundUser;
 
-    public ApiService(SearcherInDb searcherInDb, Validator validator, BuilderToken builderToken, ParseInput parseInput) {
-        this.searcherInDb = searcherInDb;
+    public LoginService(UserServiceImp userServiceImp, Validator validator, TokenBuilder tokenBuilder, FormValidator formValidator) {
+        this.userServiceImp = userServiceImp;
         this.validator = validator;
-        this.builderToken = builderToken;
-        this.parseInput = parseInput;
+        this.tokenBuilder = tokenBuilder;
+        this.formValidator = formValidator;
     }
 
     public String getTokenByUserLogin(UserLogin inputUserLogin) {
         handleInputUserLoginIfEmpty(inputUserLogin);
-        foundUser = searcherInDb.findByLoginName(inputUserLogin.getLogin());
+        foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
         handleUserByActive();
         validInputUserLogin(inputUserLogin);
-        return builderToken.buildTokenByUser(foundUser);
+        return tokenBuilder.buildTokenByUser(foundUser);
     }
 
     private void handleInputUserLoginIfEmpty(UserLogin inputUserLogin){
-        if (parseInput.isEmpty(inputUserLogin)) {
+        if (formValidator.isEmpty(inputUserLogin)) {
             throw new RuntimeException("Przesłany formularz jest pusty");
-        } else if (parseInput.areToShortInputsUserLogin(inputUserLogin)){
+        } else if (formValidator.areToShortInputsUserLogin(inputUserLogin)){
             throw new RuntimeException("Przesłane dane użytkownika są zakrótkie");
         }
     }

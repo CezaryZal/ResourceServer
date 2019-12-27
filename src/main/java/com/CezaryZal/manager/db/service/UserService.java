@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<User> findById(Long index);
+    User findById(Long index);
 
-    Optional<User> findByLoginName(String loginName);
+    User findByLoginName(String loginName);
 
     Iterable<User> findAll();
 
