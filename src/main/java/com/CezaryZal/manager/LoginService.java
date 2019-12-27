@@ -17,8 +17,6 @@ public class LoginService {
     private UserLoginValidatorService userLoginValidator;
     private PasswordComparator passwordComparator;
 
-    private User foundUser;
-
     public LoginService(UserServiceImp userServiceImp, TokenBuilder tokenBuilder,
                         UserLoginValidatorService userLoginValidator, PasswordComparator passwordComparator) {
         this.userServiceImp = userServiceImp;
@@ -29,8 +27,8 @@ public class LoginService {
 
     public String getTokenByUserLogin(UserLogin inputUserLogin) {
         handleUserLogin(inputUserLogin);
-        foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
-        handleUserByActive();
+        User foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
+        handleUserByActive(foundUser);
         passwordComparator.isEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
         return tokenBuilder.buildTokenByUser(foundUser);
     }
@@ -41,7 +39,7 @@ public class LoginService {
         }
     }
 
-    private void handleUserByActive() {
+    private void handleUserByActive(User foundUser) {
         if (!foundUser.isActive()) {
             throw new RuntimeException("Poszukiwany użytkownik nie został jeszcze aktywowany");
         }
