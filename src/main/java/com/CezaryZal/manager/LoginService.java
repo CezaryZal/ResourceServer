@@ -4,6 +4,7 @@ import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
 import com.CezaryZal.manager.db.service.UserServiceImp;
 import com.CezaryZal.manager.builder.TokenBuilder;
+import com.CezaryZal.manager.filters.comparator.PasswordComparator;
 import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
 import org.springframework.stereotype.Service;
 
@@ -14,22 +15,23 @@ public class LoginService {
     private UserServiceImp userServiceImp;
     private TokenBuilder tokenBuilder;
     private UserLoginValidatorService userLoginValidator;
-
-
+    private PasswordComparator passwordComparator;
 
     private User foundUser;
 
-    public LoginService(UserServiceImp userServiceImp, TokenBuilder tokenBuilder, UserLoginValidatorService userLoginValidatorService) {
+    public LoginService(UserServiceImp userServiceImp, TokenBuilder tokenBuilder,
+                        UserLoginValidatorService userLoginValidator, PasswordComparator passwordComparator) {
         this.userServiceImp = userServiceImp;
         this.tokenBuilder = tokenBuilder;
-        this.userLoginValidator = userLoginValidatorService;
+        this.userLoginValidator = userLoginValidator;
+        this.passwordComparator = passwordComparator;
     }
 
     public String getTokenByUserLogin(UserLogin inputUserLogin) {
         handleUserLogin(inputUserLogin);
         foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
         handleUserByActive();
-
+        passwordComparator.isEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
         return tokenBuilder.buildTokenByUser(foundUser);
     }
 
