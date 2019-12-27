@@ -3,9 +3,8 @@ package com.CezaryZal.manager;
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
 import com.CezaryZal.manager.db.service.UserServiceImp;
-import com.CezaryZal.manager.filters.FormValidator;
 import com.CezaryZal.manager.builder.TokenBuilder;
-import com.CezaryZal.manager.filters.Validator;
+import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
 import org.springframework.stereotype.Service;
 
 
@@ -13,45 +12,36 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     private UserServiceImp userServiceImp;
-    private Validator validator;
     private TokenBuilder tokenBuilder;
-    private FormValidator formValidator;
+    private UserLoginValidatorService userLoginValidator;
+
+
 
     private User foundUser;
 
-    public LoginService(UserServiceImp userServiceImp, Validator validator, TokenBuilder tokenBuilder, FormValidator formValidator) {
+    public LoginService(UserServiceImp userServiceImp, TokenBuilder tokenBuilder, UserLoginValidatorService userLoginValidatorService) {
         this.userServiceImp = userServiceImp;
-        this.validator = validator;
         this.tokenBuilder = tokenBuilder;
-        this.formValidator = formValidator;
+        this.userLoginValidator = userLoginValidatorService;
     }
 
     public String getTokenByUserLogin(UserLogin inputUserLogin) {
-        handleInputUserLoginIfEmpty(inputUserLogin);
+        handleUserLogin(inputUserLogin);
         foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
         handleUserByActive();
-        validInputUserLogin(inputUserLogin);
+
         return tokenBuilder.buildTokenByUser(foundUser);
     }
 
-    private void handleInputUserLoginIfEmpty(UserLogin inputUserLogin){
-        if (formValidator.isEmpty(inputUserLogin)) {
-            throw new RuntimeException("Przesłany formularz jest pusty");
-        } else if (formValidator.areToShortInputsUserLogin(inputUserLogin)){
-            throw new RuntimeException("Przesłane dane użytkownika są zakrótkie");
+    private void handleUserLogin(UserLogin inputUserLogin){
+        if (userLoginValidator.isCorrectUserLogin(inputUserLogin)){
+            throw new RuntimeException("Zostały wpisane niewłaściwe dane");
         }
     }
 
     private void handleUserByActive() {
         if (!foundUser.isActive()) {
             throw new RuntimeException("Poszukiwany użytkownik nie został jeszcze aktywowany");
-        }
-    }
-
-    private void validInputUserLogin(UserLogin inputUserLogin) {
-        validator.setFoundUser(foundUser);
-        if (!validator.validInputLogin(inputUserLogin)) {
-            throw new RuntimeException("Błedne hasło użytkownika");
         }
     }
 
