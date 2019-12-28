@@ -1,6 +1,7 @@
 package com.CezaryZal.manager.filters.validator;
 
 import com.CezaryZal.entity.UserLogin;
+import com.CezaryZal.exceptions.IncorrectInput;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,14 +15,20 @@ public class UserLoginValidatorService {
         this.passwordFormValidator = passwordFormValidator;
     }
 
-    public boolean isCorrectUserLogin(UserLogin userLogin) {
-        return isEmptyUserLogin(userLogin) ||
-                loginFormValidator.validLogin(userLogin.getLogin()) ||
-                passwordFormValidator.validPassword(userLogin.getPassword());
+    public void isCorrectUserLogin(UserLogin userLogin) {
+        try {
+            throwIsEmptyUserLogin(userLogin);
+            loginFormValidator.validLogin(userLogin.getLogin());
+            passwordFormValidator.validPassword(userLogin.getPassword());
+        } catch (RuntimeException exc){
+            throw new IncorrectInput(exc.getMessage());
+        }
     }
 
-    private boolean isEmptyUserLogin(UserLogin userLogin) {
-        return loginFormValidator.isEmpty(userLogin);
+    private void throwIsEmptyUserLogin(UserLogin userLogin) {
+        if (loginFormValidator.isEmpty(userLogin)) {
+            throw new NullPointerException("User login is null");
+        }
     }
 
 

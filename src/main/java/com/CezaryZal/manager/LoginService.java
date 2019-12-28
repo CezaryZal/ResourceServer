@@ -2,11 +2,16 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
+import com.CezaryZal.exceptions.IncorrectInput;
 import com.CezaryZal.manager.db.service.UserServiceImp;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
 import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import javax.security.auth.login.AccountNotFoundException;
 
 
 @Service
@@ -25,23 +30,34 @@ public class LoginService {
         this.passwordComparator = passwordComparator;
     }
 
-    public String getTokenByUserLogin(UserLogin inputUserLogin) {
-        handleUserLogin(inputUserLogin);
-        User foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
-        handleUserByActive(foundUser);
-        passwordComparator.isEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
-        return tokenBuilder.buildTokenByUser(foundUser);
-    }
+    public ResponseEntity<String> getTokenByUserLogin(UserLogin inputUserLogin) {
+        String massage = "";
+        HttpStatus status = HttpStatus.OK;
 
-    private void handleUserLogin(UserLogin inputUserLogin){
-        if (userLoginValidator.isCorrectUserLogin(inputUserLogin)){
-            throw new RuntimeException("Zostały wpisane niewłaściwe dane");
+        try {
+            handleUserLogin(inputUserLogin);
+            User foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
+            handleUserByActive(foundUser);
+            passwordComparator.isEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
+
+            massage = tokenBuilder.buildTokenByUser(foundUser);
+        } catch (IncorrectInput wrongInput){
+            massage = wrongInput.getMessage();
+            status = HttpStatus.EXPECTATION_FAILED;
+        } catch (Exception exception) {
+            massage = exception.getMessage();
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<>(massage, status);
     }
 
-    private void handleUserByActive(User foundUser) {
+    private void handleUserLogin(UserLogin inputUserLogin) {
+        userLoginValidator.isCorrectUserLogin(inputUserLogin);
+    }
+
+    private void handleUserByActive(User foundUser) throws AccountNotFoundException {
         if (!foundUser.isActive()) {
-            throw new RuntimeException("Poszukiwany użytkownik nie został jeszcze aktywowany");
+            throw new AccountNotFoundException("The requested user has not been activated");
         }
     }
 

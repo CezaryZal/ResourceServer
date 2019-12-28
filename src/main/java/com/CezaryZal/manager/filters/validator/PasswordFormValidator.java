@@ -1,27 +1,36 @@
 package com.CezaryZal.manager.filters.validator;
 
+import com.CezaryZal.exceptions.EmptyObjectException;
+import com.CezaryZal.exceptions.ToShortStringException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordFormValidator extends FormValidator {
 
-    boolean validPassword(String passwordFromUserLogin){
-        return isNullPassword(passwordFromUserLogin) ||
-                isEmptyPassword(passwordFromUserLogin) ||
-                isToShort(passwordFromUserLogin);
+    void validPassword(String passwordFromUserLogin) {
+        isNullPassword(passwordFromUserLogin);
+        isEmptyPassword(passwordFromUserLogin);
+        isToShort(passwordFromUserLogin);
     }
 
-    private boolean isNullPassword(String password){
-        return password == null;
+    private void isNullPassword(String password) {
+        if (password == null) {
+            throw new NullPointerException("Input login is null");
+        }
     }
 
-    private boolean isEmptyPassword(String password){
-        return password.isEmpty();
+    private void isEmptyPassword(String password) {
+        if (password.isEmpty()) {
+            throw new EmptyObjectException("Input login is empty");
+        }
     }
 
     @Override
     protected boolean isToShort(String password) {
-        return super.isToShort(password);
+        if (super.isToShort(password)){
+            throw new ToShortStringException("Input login is short");
+        }
+        return true;
     }
 
 

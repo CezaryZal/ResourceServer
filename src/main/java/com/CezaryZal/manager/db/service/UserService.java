@@ -2,13 +2,14 @@ package com.CezaryZal.manager.db.service;
 
 import com.CezaryZal.entity.User;
 
+import javax.naming.NameNotFoundException;
 import java.util.Optional;
 
 public interface UserService {
 
-    User findById(Long index);
+    User findById(Long index) throws NameNotFoundException;
 
-    User findByLoginName(String loginName);
+    User findByLoginName(String loginName) throws NameNotFoundException;
 
     Iterable<User> findAll();
 

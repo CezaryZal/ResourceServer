@@ -1,12 +1,15 @@
 package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.User;
+import org.springframework.http.ResponseEntity;
+
+import javax.naming.NameNotFoundException;
 
 public interface UserController {
 
-    User findById(Long id);
+    ResponseEntity<User> findById(Long id) throws NameNotFoundException;
 
-    User findByLoginName(String loginName);
+    ResponseEntity<User> findByLoginName(String loginName) throws NameNotFoundException;
 
     Iterable<User> findAll();
 

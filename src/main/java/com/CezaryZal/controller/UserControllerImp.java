@@ -2,7 +2,11 @@ package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.manager.db.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.naming.NameNotFoundException;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -15,13 +19,13 @@ public class UserControllerImp implements UserController {
     }
 
     @GetMapping("/{index}")
-    public User findById(@PathVariable Long index) {
-        return userService.findById(index);
+    public ResponseEntity<User> findById(@PathVariable Long index) throws NameNotFoundException {
+        return new ResponseEntity<>(userService.findById(index), HttpStatus.OK);
     }
 
     @GetMapping("/name/{loginName}")
-    public User findByLoginName(@PathVariable String loginName){
-        return userService.findByLoginName(loginName);
+    public ResponseEntity<User> findByLoginName(@PathVariable String loginName) throws NameNotFoundException {
+        return new ResponseEntity<>(userService.findByLoginName(loginName), HttpStatus.OK);
     }
 
     @GetMapping
