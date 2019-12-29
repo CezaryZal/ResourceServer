@@ -1,6 +1,7 @@
 package com.CezaryZal.manager.filters.validator;
 
 import com.CezaryZal.exceptions.EmptyObjectException;
+import com.CezaryZal.exceptions.NullInputException;
 import com.CezaryZal.exceptions.ToShortStringException;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class PasswordFormValidator extends FormValidator {
 
     private void isNullPassword(String password) {
         if (password == null) {
-            throw new NullPointerException("Input login is null");
+            throw new NullInputException("Input login is null");
         }
     }
 

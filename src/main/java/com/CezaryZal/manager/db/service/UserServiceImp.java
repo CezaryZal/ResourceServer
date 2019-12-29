@@ -2,6 +2,7 @@ package com.CezaryZal.manager.db.service;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NameNotFoundException;
@@ -11,6 +12,7 @@ public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
 
+    @Autowired
     public UserServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

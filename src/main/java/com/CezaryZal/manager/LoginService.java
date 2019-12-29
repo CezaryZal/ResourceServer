@@ -2,11 +2,12 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
-import com.CezaryZal.exceptions.IncorrectInput;
+import com.CezaryZal.exceptions.IncorrectInputException;
 import com.CezaryZal.manager.db.service.UserServiceImp;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
 import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class LoginService {
     private UserLoginValidatorService userLoginValidator;
     private PasswordComparator passwordComparator;
 
+    @Autowired
     public LoginService(UserServiceImp userServiceImp, TokenBuilder tokenBuilder,
                         UserLoginValidatorService userLoginValidator, PasswordComparator passwordComparator) {
         this.userServiceImp = userServiceImp;
@@ -41,7 +43,7 @@ public class LoginService {
             passwordComparator.isEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
 
             massage = tokenBuilder.buildTokenByUser(foundUser);
-        } catch (IncorrectInput wrongInput){
+        } catch (IncorrectInputException wrongInput){
             massage = wrongInput.getMessage();
             status = HttpStatus.EXPECTATION_FAILED;
         } catch (Exception exception) {

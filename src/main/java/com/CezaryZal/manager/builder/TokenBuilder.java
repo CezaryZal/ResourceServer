@@ -4,11 +4,11 @@ import com.CezaryZal.config.SecurityConstants;
 import com.CezaryZal.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Component
+@Service
 public class TokenBuilder {
 
     public String buildTokenByUser(User foundUser){

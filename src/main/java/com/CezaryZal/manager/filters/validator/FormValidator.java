@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FormValidator {
 
-    private final int MIN_LENGTH = 3;
+    private static final int MIN_LENGTH = 3;
 
     boolean isEmpty(UserLogin userLogin) {
         return userLogin == null;

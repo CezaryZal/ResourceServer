@@ -2,6 +2,7 @@ package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.manager.db.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ public class UserControllerImp implements UserController {
 
     private UserService userService;
 
+    @Autowired
     public UserControllerImp(UserService userService) {
         this.userService = userService;
     }

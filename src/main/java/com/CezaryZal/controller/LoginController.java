@@ -2,6 +2,7 @@ package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.UserLogin;
 import com.CezaryZal.manager.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ public class LoginController {
 
     private LoginService loginService;
 
+    @Autowired
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
