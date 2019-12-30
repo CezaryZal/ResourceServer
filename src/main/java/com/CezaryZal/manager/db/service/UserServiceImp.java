@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NameNotFoundException;
+import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -27,8 +28,8 @@ public class UserServiceImp implements UserService {
                 .orElseThrow(() -> new NameNotFoundException("The User sought does not exist"));
     }
 
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
+    public List<User> findAll() {
+        return (List<User>) userRepository.findAll();
     }
 
     public User addNewUser(User user) {

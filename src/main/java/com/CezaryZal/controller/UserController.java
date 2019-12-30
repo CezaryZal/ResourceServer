@@ -4,6 +4,7 @@ import com.CezaryZal.entity.User;
 import org.springframework.http.ResponseEntity;
 
 import javax.naming.NameNotFoundException;
+import java.util.List;
 
 public interface UserController {
 
@@ -11,7 +12,7 @@ public interface UserController {
 
     ResponseEntity<User> findByLoginName(String loginName) throws NameNotFoundException;
 
-    Iterable<User> findAll();
+    List<User> findAll();
 
     User addNewUser(User user);
 

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.NameNotFoundException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -31,7 +32,7 @@ public class UserControllerImp implements UserController {
     }
 
     @GetMapping
-    public Iterable<User> findAll() {
+    public List<User> findAll() {
         return userService.findAll();
     }
 
