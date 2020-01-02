@@ -1,11 +1,11 @@
 package com.CezaryZal.manager.db.service;
 
 import com.CezaryZal.entity.User;
+import com.CezaryZal.exceptions.IncorrectLoginOrPasswordSecurityException;
 import com.CezaryZal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.NameNotFoundException;
 import java.util.List;
 
 @Service
@@ -18,14 +18,14 @@ public class UserServiceImp implements UserService {
         this.userRepository = userRepository;
     }
 
-    public User findById(Long index) throws NameNotFoundException {
+    public User findById(Long index) {
         return userRepository.findById(index)
-                .orElseThrow(() -> new NameNotFoundException("The User sought does not exist"));
+                .orElseThrow(() -> new IncorrectLoginOrPasswordSecurityException("Login or password incorrectly entered"));
     }
 
-    public User findByLoginName(String loginName) throws NameNotFoundException {
+    public User findByLoginName(String loginName) {
         return userRepository.findByLoginName(loginName)
-                .orElseThrow(() -> new NameNotFoundException("The User sought does not exist"));
+                .orElseThrow(() -> new IncorrectLoginOrPasswordSecurityException("Login or password incorrectly entered"));
     }
 
     public List<User> findAll() {

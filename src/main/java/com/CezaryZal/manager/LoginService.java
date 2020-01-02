@@ -2,16 +2,14 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.User;
 import com.CezaryZal.entity.UserLogin;
-import com.CezaryZal.exceptions.IncorrectInputException;
 import com.CezaryZal.manager.db.service.UserServiceImp;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
 import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.naming.NameNotFoundException;
 import javax.security.auth.login.AccountNotFoundException;
 
 
@@ -32,25 +30,14 @@ public class LoginService {
         this.passwordComparator = passwordComparator;
     }
 
-    public ResponseEntity<String> getTokenByUserLogin(UserLogin inputUserLogin) {
-        String massage = "";
-        HttpStatus status = HttpStatus.OK;
+    public String getTokenByUserLogin(UserLogin inputUserLogin) throws NameNotFoundException, AccountNotFoundException {
 
-        try {
             handleUserLogin(inputUserLogin);
             User foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
             handleUserByActive(foundUser);
-            passwordComparator.isEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
+            passwordComparator.throwIsNotEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
 
-            massage = tokenBuilder.buildTokenByUser(foundUser);
-        } catch (IncorrectInputException wrongInput){
-            massage = wrongInput.getMessage();
-            status = HttpStatus.EXPECTATION_FAILED;
-        } catch (Exception exception) {
-            massage = exception.getMessage();
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return new ResponseEntity<>(massage, status);
+        return tokenBuilder.buildTokenByUser(foundUser);
     }
 
     private void handleUserLogin(UserLogin inputUserLogin) {

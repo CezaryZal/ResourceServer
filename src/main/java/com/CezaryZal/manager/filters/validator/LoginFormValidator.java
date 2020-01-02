@@ -30,7 +30,7 @@ public class LoginFormValidator extends FormValidator {
     @Override
     protected boolean isToShort(String login) {
         if (super.isToShort(login)){
-            throw new ToShortStringException("Input login is short");
+            throw new ToShortStringException("Input login is to short");
         }
         return true;
     }

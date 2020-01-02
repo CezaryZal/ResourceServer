@@ -16,20 +16,20 @@ public class PasswordFormValidator extends FormValidator {
 
     private void isNullPassword(String password) {
         if (password == null) {
-            throw new NullInputException("Input login is null");
+            throw new NullInputException("Input password is null");
         }
     }
 
     private void isEmptyPassword(String password) {
         if (password.isEmpty()) {
-            throw new EmptyObjectException("Input login is empty");
+            throw new EmptyObjectException("Input password is empty");
         }
     }
 
     @Override
     protected boolean isToShort(String password) {
         if (super.isToShort(password)){
-            throw new ToShortStringException("Input login is short");
+            throw new ToShortStringException("Input password is to short");
         }
         return true;
     }
