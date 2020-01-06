@@ -1,20 +1,20 @@
 package com.CezaryZal.manager.db.service;
 
-import com.CezaryZal.entity.User;
+import com.CezaryZal.entity.UserToDb;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface UserService {
 
-    Optional<User> findById(Long index);
+    UserToDb findById(Long index);
 
-    Optional<User> findByLoginName(String loginName);
+    UserToDb findByLoginName(String loginName);
 
-    Iterable<User> findAll();
+    List<UserToDb> findAll();
 
-    User addNewUser(User user);
+    UserToDb addNewUser(UserToDb userToDb);
 
-    User updateUser(User user);
+    UserToDb updateUser(UserToDb userToDb);
 
     void deleteUser(Long index);
 }

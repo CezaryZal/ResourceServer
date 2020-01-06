@@ -1,38 +1,43 @@
 package com.CezaryZal.manager.db.service;
 
-import com.CezaryZal.entity.User;
+import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.exceptions.UserNotFoundException;
 import com.CezaryZal.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
 
+    @Autowired
     public UserServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findById(Long index) {
-        return userRepository.findById(index);
+    public UserToDb findById(Long index) {
+        return userRepository.findById(index)
+                .orElseThrow(() -> new UserNotFoundException("User not found by id"));
     }
 
-    public Optional<User> findByLoginName(String loginName){
-        return userRepository.findByLoginName(loginName);
+    public UserToDb findByLoginName(String loginName) {
+        return userRepository.findByLoginName(loginName)
+                .orElseThrow(() -> new UserNotFoundException("User not found by id by loginName"));
     }
 
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
+    public List<UserToDb> findAll() {
+        return (List<UserToDb>) userRepository.findAll();
     }
 
-    public User addNewUser(User user) {
-        return userRepository.save(user);
+    public UserToDb addNewUser(UserToDb userToDb) {
+        return userRepository.save(userToDb);
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserToDb updateUser(UserToDb userToDb) {
+        return userRepository.save(userToDb);
     }
 
     public void deleteUser(Long index) {
