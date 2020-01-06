@@ -15,8 +15,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({
             NullInputException.class,
             EmptyObjectException.class,
-            ToShortStringException.class,
-            IncorrectLoginOrPasswordSecurityException.class})
+            ToShortStringException.class,})
     protected ResponseEntity<Object> handleValidationLoginAndPasswordExceptions(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
