@@ -1,21 +1,20 @@
 package com.CezaryZal.manager.db.service;
 
-import com.CezaryZal.entity.User;
+import com.CezaryZal.entity.UserToDb;
 
-import javax.naming.NameNotFoundException;
 import java.util.List;
 
 public interface UserService {
 
-    User findById(Long index) throws NameNotFoundException;
+    UserToDb findById(Long index);
 
-    User findByLoginName(String loginName) throws NameNotFoundException;
+    UserToDb findByLoginName(String loginName);
 
-    List<User> findAll();
+    List<UserToDb> findAll();
 
-    User addNewUser(User user);
+    UserToDb addNewUser(UserToDb userToDb);
 
-    User updateUser(User user);
+    UserToDb updateUser(UserToDb userToDb);
 
     void deleteUser(Long index);
 }

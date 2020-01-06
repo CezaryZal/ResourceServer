@@ -12,7 +12,7 @@ public class LoginFormValidator extends FormValidator {
     void validLogin(String login) {
         throwExceptionIfLoginIsNull(login);
         throwExceptionIfLoginIsEmptyLogin(login);
-        isToShort(login);
+        throwIfIsToShort(login);
     }
 
     private void throwExceptionIfLoginIsNull(String login) {
@@ -28,8 +28,8 @@ public class LoginFormValidator extends FormValidator {
     }
 
     @Override
-    protected boolean isToShort(String login) {
-        if (super.isToShort(login)){
+    protected boolean throwIfIsToShort(String login) {
+        if (super.throwIfIsToShort(login)){
             throw new ToShortStringException("Input login is to short");
         }
         return true;

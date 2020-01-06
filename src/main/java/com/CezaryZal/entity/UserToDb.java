@@ -12,14 +12,14 @@ import java.util.List;
 @Table(name = "user")
 @Data
 @NoArgsConstructor
-public class User {
+public class UserToDb {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String loginName;
     private String password;
-    private boolean active;
+    private boolean approved;
     private String roles;
     private String permissions;
 

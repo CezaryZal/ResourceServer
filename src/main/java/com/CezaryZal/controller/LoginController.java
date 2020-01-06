@@ -1,6 +1,6 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.UserLogin;
+import com.CezaryZal.entity.AuthenticationRequest;
 import com.CezaryZal.manager.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> getTokenByUserLogin(@RequestBody UserLogin inputUserLogin) throws NameNotFoundException, AccountNotFoundException {
-         return new ResponseEntity<>(loginService.getTokenByUserLogin(inputUserLogin), HttpStatus.OK);
+    public ResponseEntity<String> getTokenByUserLogin(@RequestBody AuthenticationRequest inputAuthenticationRequest) throws NameNotFoundException, AccountNotFoundException {
+         return new ResponseEntity<>(loginService.getTokenByUserLogin(inputAuthenticationRequest), HttpStatus.OK);
     }
 
 }

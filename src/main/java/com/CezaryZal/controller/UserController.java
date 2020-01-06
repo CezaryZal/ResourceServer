@@ -1,6 +1,6 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.User;
+import com.CezaryZal.entity.UserToDb;
 import org.springframework.http.ResponseEntity;
 
 import javax.naming.NameNotFoundException;
@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface UserController {
 
-    ResponseEntity<User> findById(Long id) throws NameNotFoundException;
+    ResponseEntity<UserToDb> findById(Long id) throws NameNotFoundException;
 
-    ResponseEntity<User> findByLoginName(String loginName) throws NameNotFoundException;
+    ResponseEntity<UserToDb> findByLoginName(String loginName) throws NameNotFoundException;
 
-    List<User> findAll();
+    List<UserToDb> findAll();
 
-    User addNewUser(User user);
+    UserToDb addNewUser(UserToDb userToDb);
 
-    User updateUser(User user);
+    UserToDb updateUser(UserToDb userToDb);
 
     void deleteUserById(Long index);
 }

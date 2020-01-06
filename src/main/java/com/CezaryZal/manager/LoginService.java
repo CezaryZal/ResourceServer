@@ -1,7 +1,7 @@
 package com.CezaryZal.manager;
 
-import com.CezaryZal.entity.User;
-import com.CezaryZal.entity.UserLogin;
+import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.entity.AuthenticationRequest;
 import com.CezaryZal.manager.db.service.UserServiceImp;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
@@ -9,7 +9,6 @@ import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.NameNotFoundException;
 import javax.security.auth.login.AccountNotFoundException;
 
 
@@ -30,24 +29,22 @@ public class LoginService {
         this.passwordComparator = passwordComparator;
     }
 
-    public String getTokenByUserLogin(UserLogin inputUserLogin) throws NameNotFoundException, AccountNotFoundException {
+    public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
+            handleUserLogin(inputAuthenticationRequest);
+            UserToDb foundUserToDb = userServiceImp.findByLoginName(inputAuthenticationRequest.getLogin());
+            throwExceptionIfUserIsNotActive(foundUserToDb);
+            passwordComparator.throwIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserToDb.getPassword());
 
-            handleUserLogin(inputUserLogin);
-            User foundUser = userServiceImp.findByLoginName(inputUserLogin.getLogin());
-            handleUserByActive(foundUser);
-            passwordComparator.throwIsNotEqualsPassword(inputUserLogin.getPassword(), foundUser.getPassword());
-
-        return tokenBuilder.buildTokenByUser(foundUser);
+        return tokenBuilder.buildTokenByUser(foundUserToDb);
     }
 
-    private void handleUserLogin(UserLogin inputUserLogin) {
-        userLoginValidator.isCorrectUserLogin(inputUserLogin);
+    private void handleUserLogin(AuthenticationRequest inputAuthenticationRequest) {
+        userLoginValidator.validUserLogin(inputAuthenticationRequest);
     }
 
-    private void handleUserByActive(User foundUser) throws AccountNotFoundException {
-        if (!foundUser.isActive()) {
+    private void throwExceptionIfUserIsNotActive(UserToDb foundUserToDb) throws AccountNotFoundException {
+        if (!foundUserToDb.isApproved()) {
             throw new AccountNotFoundException("The requested user has not been activated");
         }
     }
-
 }

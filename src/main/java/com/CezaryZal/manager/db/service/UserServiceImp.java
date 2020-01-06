@@ -1,7 +1,7 @@
 package com.CezaryZal.manager.db.service;
 
-import com.CezaryZal.entity.User;
-import com.CezaryZal.exceptions.IncorrectLoginOrPasswordSecurityException;
+import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.exceptions.UserNotFoundException;
 import com.CezaryZal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,26 +18,26 @@ public class UserServiceImp implements UserService {
         this.userRepository = userRepository;
     }
 
-    public User findById(Long index) {
+    public UserToDb findById(Long index) {
         return userRepository.findById(index)
-                .orElseThrow(() -> new IncorrectLoginOrPasswordSecurityException("Login or password incorrectly entered"));
+                .orElseThrow(() -> new UserNotFoundException("User not found by id"));
     }
 
-    public User findByLoginName(String loginName) {
+    public UserToDb findByLoginName(String loginName) {
         return userRepository.findByLoginName(loginName)
-                .orElseThrow(() -> new IncorrectLoginOrPasswordSecurityException("Login or password incorrectly entered"));
+                .orElseThrow(() -> new UserNotFoundException("User not found by id by loginName"));
     }
 
-    public List<User> findAll() {
-        return (List<User>) userRepository.findAll();
+    public List<UserToDb> findAll() {
+        return (List<UserToDb>) userRepository.findAll();
     }
 
-    public User addNewUser(User user) {
-        return userRepository.save(user);
+    public UserToDb addNewUser(UserToDb userToDb) {
+        return userRepository.save(userToDb);
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserToDb updateUser(UserToDb userToDb) {
+        return userRepository.save(userToDb);
     }
 
     public void deleteUser(Long index) {
