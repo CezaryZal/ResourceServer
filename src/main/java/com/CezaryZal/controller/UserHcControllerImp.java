@@ -1,7 +1,7 @@
 package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.UserToHc;
-import com.CezaryZal.manager.db.service.UserService;
+import com.CezaryZal.manager.db.service.UserHcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,42 +11,42 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/user")
-public class UserControllerImp implements UserController {
+public class UserHcControllerImp implements UserHcController {
 
-    private UserService userService;
+    private UserHcService userHCService;
 
     @Autowired
-    public UserControllerImp(UserService userService) {
-        this.userService = userService;
+    public UserHcControllerImp(UserHcService userHCService) {
+        this.userHCService = userHCService;
     }
 
     @GetMapping("/{index}")
     public ResponseEntity<UserToHc> findById(@PathVariable Long index) {
-        return new ResponseEntity<>(userService.findById(index), HttpStatus.OK);
+        return new ResponseEntity<>(userHCService.findById(index), HttpStatus.OK);
     }
 
     @GetMapping("/name/{loginName}")
     public ResponseEntity<UserToHc> findByLoginName(@PathVariable String loginName) {
-        return new ResponseEntity<>(userService.findByLoginName(loginName), HttpStatus.OK);
+        return new ResponseEntity<>(userHCService.findByLoginName(loginName), HttpStatus.OK);
     }
 
     @GetMapping
     public List<UserToHc> findAll() {
-        return userService.findAll();
+        return userHCService.findAll();
     }
 
     @PostMapping
     public UserToHc addNewUser(@RequestBody UserToHc userToHc) {
-        return userService.addNewUser(userToHc);
+        return userHCService.addNewUser(userToHc);
     }
 
     @PutMapping
     public UserToHc updateUser(@RequestBody UserToHc userToHc) {
-        return userService.updateUser(userToHc);
+        return userHCService.updateUser(userToHc);
     }
 
     @DeleteMapping("/{index}")
     public void deleteUserById(@PathVariable Long index) {
-        userService.deleteUser(index);
+        userHCService.deleteUser(index);
     }
 }

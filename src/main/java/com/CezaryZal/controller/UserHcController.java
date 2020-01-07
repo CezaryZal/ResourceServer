@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import javax.naming.NameNotFoundException;
 import java.util.List;
 
-public interface UserController {
+public interface UserHcController {
 
     ResponseEntity<UserToHc> findById(Long id) throws NameNotFoundException;
 

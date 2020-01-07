@@ -2,7 +2,7 @@ package com.CezaryZal.manager;
 
 import com.CezaryZal.entity.UserToHc;
 import com.CezaryZal.entity.AuthenticationRequest;
-import com.CezaryZal.manager.db.service.UserService;
+import com.CezaryZal.manager.db.service.UserHcService;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
 import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
@@ -15,15 +15,15 @@ import javax.security.auth.login.AccountNotFoundException;
 @Service
 public class LoginService {
 
-    private UserService userService;
+    private UserHcService userHCService;
     private TokenBuilder tokenBuilder;
     private UserLoginValidatorService userLoginValidator;
     private PasswordComparator passwordComparator;
 
     @Autowired
-    public LoginService(UserService userService, TokenBuilder tokenBuilder,
+    public LoginService(UserHcService userHCService, TokenBuilder tokenBuilder,
                         UserLoginValidatorService userLoginValidator, PasswordComparator passwordComparator) {
-        this.userService = userService;
+        this.userHCService = userHCService;
         this.tokenBuilder = tokenBuilder;
         this.userLoginValidator = userLoginValidator;
         this.passwordComparator = passwordComparator;
@@ -31,7 +31,7 @@ public class LoginService {
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
             handleUserLogin(inputAuthenticationRequest);
-            UserToHc foundUserToHc = userService.findByLoginName(inputAuthenticationRequest.getLogin());
+            UserToHc foundUserToHc = userHCService.findByLoginName(inputAuthenticationRequest.getLogin());
             throwExceptionIfUserIsNotActive(foundUserToHc);
             passwordComparator.throwIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserToHc.getPassword());
 

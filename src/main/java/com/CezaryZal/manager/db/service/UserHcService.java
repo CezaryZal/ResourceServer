@@ -4,7 +4,7 @@ import com.CezaryZal.entity.UserToHc;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserHcService {
 
     UserToHc findById(Long index);
 
