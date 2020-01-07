@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users_to_hc")
 @Data
 @NoArgsConstructor
-public class UserToDb {
+public class UserToHc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

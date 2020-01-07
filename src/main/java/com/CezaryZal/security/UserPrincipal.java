@@ -1,6 +1,6 @@
 package com.CezaryZal.security;
 
-import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.entity.UserToHc;
 import com.CezaryZal.manager.db.service.ContainersCreator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
-    private UserToDb user;
+    private UserToHc user;
 
-    public UserPrincipal(UserToDb user) {
+    public UserPrincipal(UserToHc user) {
         this.user = user;
     }
 

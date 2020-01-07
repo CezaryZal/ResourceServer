@@ -1,6 +1,6 @@
 package com.CezaryZal.security;
 
-import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.entity.UserToHc;
 import com.CezaryZal.exceptions.UserNotFoundException;
 import com.CezaryZal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        UserToDb user = userRepository.findByLoginName(login)
+        UserToHc user = userRepository.findByLoginName(login)
                 .orElseThrow(() -> new UserNotFoundException("User not found by id by loginName"));
 
         return new UserPrincipal(user);

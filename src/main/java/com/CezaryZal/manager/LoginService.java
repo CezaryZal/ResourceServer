@@ -1,6 +1,6 @@
 package com.CezaryZal.manager;
 
-import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.entity.UserToHc;
 import com.CezaryZal.entity.AuthenticationRequest;
 import com.CezaryZal.manager.db.service.UserService;
 import com.CezaryZal.manager.builder.TokenBuilder;
@@ -31,19 +31,19 @@ public class LoginService {
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
             handleUserLogin(inputAuthenticationRequest);
-            UserToDb foundUserToDb = userService.findByLoginName(inputAuthenticationRequest.getLogin());
-            throwExceptionIfUserIsNotActive(foundUserToDb);
-            passwordComparator.throwIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserToDb.getPassword());
+            UserToHc foundUserToHc = userService.findByLoginName(inputAuthenticationRequest.getLogin());
+            throwExceptionIfUserIsNotActive(foundUserToHc);
+            passwordComparator.throwIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserToHc.getPassword());
 
-        return tokenBuilder.buildTokenByUser(foundUserToDb);
+        return tokenBuilder.buildTokenByUser(foundUserToHc);
     }
 
     private void handleUserLogin(AuthenticationRequest inputAuthenticationRequest) {
         userLoginValidator.validUserLogin(inputAuthenticationRequest);
     }
 
-    private void throwExceptionIfUserIsNotActive(UserToDb foundUserToDb) throws AccountNotFoundException {
-        if (!foundUserToDb.isApproved()) {
+    private void throwExceptionIfUserIsNotActive(UserToHc foundUserToHc) throws AccountNotFoundException {
+        if (!foundUserToHc.isApproved()) {
             throw new AccountNotFoundException("The requested user has not been activated");
         }
     }

@@ -1,11 +1,11 @@
 package com.CezaryZal.repository;
 
-import com.CezaryZal.entity.UserToDb;
+import com.CezaryZal.entity.UserToHc;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<UserToDb, Long> {
+public interface UserRepository extends CrudRepository<UserToHc, Long> {
 
-    Optional<UserToDb> findByLoginName(String loginName);
+    Optional<UserToHc> findByLoginName(String loginName);
 }
