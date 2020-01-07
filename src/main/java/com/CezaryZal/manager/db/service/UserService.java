@@ -17,4 +17,8 @@ public interface UserService {
     UserToDb updateUser(UserToDb userToDb);
 
     void deleteUser(Long index);
+
+    List<String> getRoleList(String roles);
+
+    List<String> getPermissionList(String permissions);
 }
