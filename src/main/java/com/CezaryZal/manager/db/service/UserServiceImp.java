@@ -4,20 +4,21 @@ import com.CezaryZal.entity.UserToDb;
 import com.CezaryZal.exceptions.UserNotFoundException;
 import com.CezaryZal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository) {
+    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserToDb findById(Long index) {
@@ -35,6 +36,8 @@ public class UserServiceImp implements UserService {
     }
 
     public UserToDb addNewUser(UserToDb userToDb) {
+        String passwordBcrypt = passwordEncoder.encode(userToDb.getPassword());
+        userToDb.setPassword(passwordBcrypt);
         return userRepository.save(userToDb);
     }
 
@@ -46,17 +49,5 @@ public class UserServiceImp implements UserService {
         userRepository.deleteById(index);
     }
 
-    public List<String> getRoleList(String roles){
-        if(roles.length() > 0){
-            return Arrays.asList(roles.split(","));
-        }
-        return new ArrayList<>();
-    }
 
-    public List<String> getPermissionList(String permissions){
-        if(permissions.length() > 0){
-            return Arrays.asList(permissions.split(","));
-        }
-        return new ArrayList<>();
-    }
 }

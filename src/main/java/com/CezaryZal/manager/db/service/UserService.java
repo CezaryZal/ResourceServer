@@ -18,7 +18,4 @@ public interface UserService {
 
     void deleteUser(Long index);
 
-    List<String> getRoleList(String roles);
-
-    List<String> getPermissionList(String permissions);
 }

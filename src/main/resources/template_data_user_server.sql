@@ -3,13 +3,13 @@ DATABASE IF NOT EXISTS `user_server`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `userToDb`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `userToDb`
+CREATE TABLE `user`
 (
     `id`          BIGINT      NOT NULL AUTO_INCREMENT,
     `login_name`  VARCHAR(24) NOT NULL,
-    `password`    VARCHAR(24) NOT NULL,
+    `password`    char(68) NOT NULL,
     `approved`      BOOLEAN     DEFAULT FALSE,
     `roles`       VARCHAR(45) NOT NULL,
     `permissions` VARCHAR(45) DEFAULT NULL,
@@ -17,9 +17,11 @@ CREATE TABLE `userToDb`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO `userToDb` VALUES
+INSERT INTO `user` VALUES
 (1, 'tomek', 'tom', true, 'USER', null, 1),
 (2, 'janek', 'jan', true, 'VIEWER', null, 2),
-(3, 'kris', 'admin123', true, 'ADMIN', null, 3);
+(3, 'czar', '$2a$10$PgvbUQsnWj4oj3bq0tIcmO3QoEWJunCekgDV3g.LnC6VkU9tTJf8C', true, 'ADMIN', 'ADD', 3);
+
+-- {bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K'
 
     SET FOREIGN_KEY_CHECKS = 1;

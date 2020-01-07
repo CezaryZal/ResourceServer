@@ -1,42 +1,29 @@
 package com.CezaryZal.config;
 
+import com.CezaryZal.security.UserPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserPrincipalDetailsService detailsService;
+    private PasswordEncoder passwordEncoder;
 
-
-        @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user123")
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin123")
-                .roles("ADMIN")
-                .build();
-
-        UserDetails viewer = User.withDefaultPasswordEncoder()
-                .username("viewer")
-                .password("viewer123")
-                .roles("VIEWER")
-                .build();
-        return new InMemoryUserDetailsManager(user, admin, viewer);
+    public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService, PasswordEncoder passwordEncoder){
+        this.detailsService = userPrincipalDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth){
+        auth.authenticationProvider(authenticationProvider());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -45,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/user/**").hasRole("ADMIN")
-                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/login").authenticated()
                 .antMatchers("/test").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .and()
@@ -57,5 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
     }
 
+    @Bean
+    DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setUserDetailsService(detailsService);
 
+        return daoAuthenticationProvider;
+    }
 }
