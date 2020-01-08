@@ -1,4 +1,4 @@
-package com.CezaryZal.config;
+package com.CezaryZal.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

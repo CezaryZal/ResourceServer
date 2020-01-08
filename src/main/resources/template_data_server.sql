@@ -14,14 +14,14 @@ CREATE TABLE `users_hc`
     `approved`      BOOLEAN     DEFAULT FALSE,
     `roles`       VARCHAR(200) NOT NULL,
     `permissions` VARCHAR(200) DEFAULT NULL,
-    `user_id`     INTEGER     NOT NULL,
+    `user_id`     INTEGER     DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `users_hc` VALUES
-(1, 'tomek', '$2a$10$yZVdAgWG3suGQI033C7O.emzIiJf4o4K.wzxLsrXYQD7z9KIFfUPO', true, 'USER', 'ADD', 1),
-(2, 'jan', '$2a$10$zm8PcMsChwxMiNS82hnFhOlwpKMzHdEmu4gNW383kt9dOofjF4NES', true, 'VIEWER', 'ADD', 2),
-(3, 'czar', '$2a$10$4J29DXW/W2BMVEzInZ8wPuduiPnsAZh5U2097InJGemW5SOc5uFUi', true, 'ADMIN', 'ADD', 3);
+(1, 'tomek', '$2a$14$YMpWNeW5XrzvJnI/TuosWenErLQght/C56DhIE5BNkUs296PvPFLC', true, 'USER', 'ADD', 2),
+(2, 'janek', '$2a$14$qvPKR4sT9jI1svoxv/IbaOC0hQJ9sHDUkW5W9lsBCXKF84oWglyDa', true, 'VIEWER', 'ADD', 1),
+(3, 'czar', '$2a$14$XHvkIs6TbxrBM9msB31DI.M9OLHkfTDBBKcIsG56fLB0FZ3DtgB7a', true, 'ADMIN', 'ADD', 3);
 
 
 DROP TABLE IF EXISTS `users_app`;

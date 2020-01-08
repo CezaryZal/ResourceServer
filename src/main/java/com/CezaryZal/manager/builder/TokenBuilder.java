@@ -1,6 +1,6 @@
 package com.CezaryZal.manager.builder;
 
-import com.CezaryZal.config.SecurityConstants;
+import com.CezaryZal.security.SecurityConstants;
 import com.CezaryZal.entity.UserHc;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -21,8 +21,10 @@ public class LoginService {
     private PasswordComparator passwordComparator;
 
     @Autowired
-    public LoginService(UserHcService userHCService, TokenBuilder tokenBuilder,
-                        UserLoginValidatorService userLoginValidator, PasswordComparator passwordComparator) {
+    public LoginService(UserHcService userHCService,
+                        TokenBuilder tokenBuilder,
+                        UserLoginValidatorService userLoginValidator,
+                        PasswordComparator passwordComparator) {
         this.userHCService = userHCService;
         this.tokenBuilder = tokenBuilder;
         this.userLoginValidator = userLoginValidator;
@@ -30,10 +32,10 @@ public class LoginService {
     }
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
-            handleUserLogin(inputAuthenticationRequest);
-            UserHc foundUserHc = userHCService.findByLoginName(inputAuthenticationRequest.getLogin());
-            throwExceptionIfUserIsNotActive(foundUserHc);
-            passwordComparator.throwIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserHc.getPassword());
+        handleUserLogin(inputAuthenticationRequest);
+        UserHc foundUserHc = userHCService.findByLoginName(inputAuthenticationRequest.getLogin());
+        throwExceptionIfUserIsNotActive(foundUserHc);
+        passwordComparator.throwIfIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserHc.getPassword());
 
         return tokenBuilder.buildTokenByUser(foundUserHc);
     }

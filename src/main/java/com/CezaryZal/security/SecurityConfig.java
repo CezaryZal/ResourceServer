@@ -1,6 +1,5 @@
-package com.CezaryZal.config;
+package com.CezaryZal.security;
 
-import com.CezaryZal.security.UserPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/user/**").hasRole("ADMIN")
-                .antMatchers("/api/**").hasRole("MODERATOR")
+//                .antMatchers("/api/**").hasRole("MODERATOR")
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/test").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .and()
