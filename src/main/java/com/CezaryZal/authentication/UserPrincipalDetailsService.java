@@ -1,4 +1,4 @@
-package com.CezaryZal.security;
+package com.CezaryZal.authentication;
 
 import com.CezaryZal.entity.UserApp;
 import com.CezaryZal.exceptions.UserNotFoundException;

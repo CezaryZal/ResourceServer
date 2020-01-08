@@ -1,5 +1,6 @@
-package com.CezaryZal.security;
+package com.CezaryZal.config;
 
+import com.CezaryZal.authentication.UserPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

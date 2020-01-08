@@ -1,4 +1,4 @@
-package com.CezaryZal.security;
+package com.CezaryZal.authentication;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
