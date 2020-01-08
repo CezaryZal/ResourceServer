@@ -1,10 +1,10 @@
-package com.CezaryZal.manager.db.service;
+package com.CezaryZal.manager.modifier.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContainersCreator {
+public class ContainersCreatorOfUserHc {
 
     public List<String> getRoleList(String roles){
         if(roles.length() > 0){

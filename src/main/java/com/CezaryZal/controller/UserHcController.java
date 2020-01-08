@@ -1,6 +1,6 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.UserToHc;
+import com.CezaryZal.entity.UserHc;
 import org.springframework.http.ResponseEntity;
 
 import javax.naming.NameNotFoundException;
@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface UserHcController {
 
-    ResponseEntity<UserToHc> findById(Long id) throws NameNotFoundException;
+    ResponseEntity<UserHc> findById(Long id) throws NameNotFoundException;
 
-    ResponseEntity<UserToHc> findByLoginName(String loginName) throws NameNotFoundException;
+    ResponseEntity<UserHc> findByLoginName(String loginName) throws NameNotFoundException;
 
-    List<UserToHc> findAll();
+    List<UserHc> findAll();
 
-    UserToHc addNewUser(UserToHc userToHc);
+    UserHc addNewUser(UserHc userHc);
 
-    UserToHc updateUser(UserToHc userToHc);
+    UserHc updateUser(UserHc userHc);
 
     void deleteUserById(Long index);
 }

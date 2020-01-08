@@ -1,7 +1,7 @@
 package com.CezaryZal.security;
 
 import com.CezaryZal.entity.UserApp;
-import com.CezaryZal.manager.db.service.ContainersCreator;
+import com.CezaryZal.manager.modifier.entity.ContainersCreatorOfUserHc;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,12 +20,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        ContainersCreator containersCreator = new ContainersCreator();
+        ContainersCreatorOfUserHc containersCreatorOfUserHc = new ContainersCreatorOfUserHc();
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         // Extract list of roles (ROLE_name)
         String roles = userApp.getRoles();
-        containersCreator.getRoleList(roles).forEach(r -> {
+        containersCreatorOfUserHc.getRoleList(roles).forEach(r -> {
             GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
             authorities.add(authority);
         });

@@ -1,6 +1,6 @@
 package com.CezaryZal.manager.db.service;
 
-import com.CezaryZal.entity.UserToHc;
+import com.CezaryZal.entity.UserHc;
 import com.CezaryZal.exceptions.UserNotFoundException;
 import com.CezaryZal.repository.UserHcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,28 +21,28 @@ public class UserHcServiceImp implements UserHcService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserToHc findById(Long index) {
+    public UserHc findById(Long index) {
         return userHcRepository.findById(index)
                 .orElseThrow(() -> new UserNotFoundException("User not found by id"));
     }
 
-    public UserToHc findByLoginName(String loginName) {
+    public UserHc findByLoginName(String loginName) {
         return userHcRepository.findByLoginName(loginName)
                 .orElseThrow(() -> new UserNotFoundException("User not found by loginName"));
     }
 
-    public List<UserToHc> findAll() {
-        return (List<UserToHc>) userHcRepository.findAll();
+    public List<UserHc> findAll() {
+        return (List<UserHc>) userHcRepository.findAll();
     }
 
-    public UserToHc addNewUser(UserToHc userToHc) {
-        String passwordBcrypt = passwordEncoder.encode(userToHc.getPassword());
-        userToHc.setPassword(passwordBcrypt);
-        return userHcRepository.save(userToHc);
+    public UserHc addNewUser(UserHc userHc) {
+        String passwordBcrypt = passwordEncoder.encode(userHc.getPassword());
+        userHc.setPassword(passwordBcrypt);
+        return userHcRepository.save(userHc);
     }
 
-    public UserToHc updateUser(UserToHc userToHc) {
-        return userHcRepository.save(userToHc);
+    public UserHc updateUser(UserHc userHc) {
+        return userHcRepository.save(userHc);
     }
 
     public void deleteUser(Long index) {

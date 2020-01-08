@@ -1,6 +1,6 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.UserToHc;
+import com.CezaryZal.entity.UserHc;
 import com.CezaryZal.manager.db.service.UserHcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,28 +21,28 @@ public class UserHcControllerImp implements UserHcController {
     }
 
     @GetMapping("/{index}")
-    public ResponseEntity<UserToHc> findById(@PathVariable Long index) {
+    public ResponseEntity<UserHc> findById(@PathVariable Long index) {
         return new ResponseEntity<>(userHCService.findById(index), HttpStatus.OK);
     }
 
     @GetMapping("/name/{loginName}")
-    public ResponseEntity<UserToHc> findByLoginName(@PathVariable String loginName) {
+    public ResponseEntity<UserHc> findByLoginName(@PathVariable String loginName) {
         return new ResponseEntity<>(userHCService.findByLoginName(loginName), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<UserToHc> findAll() {
+    public List<UserHc> findAll() {
         return userHCService.findAll();
     }
 
     @PostMapping
-    public UserToHc addNewUser(@RequestBody UserToHc userToHc) {
-        return userHCService.addNewUser(userToHc);
+    public UserHc addNewUser(@RequestBody UserHc userHc) {
+        return userHCService.addNewUser(userHc);
     }
 
     @PutMapping
-    public UserToHc updateUser(@RequestBody UserToHc userToHc) {
-        return userHCService.updateUser(userToHc);
+    public UserHc updateUser(@RequestBody UserHc userHc) {
+        return userHCService.updateUser(userHc);
     }
 
     @DeleteMapping("/{index}")

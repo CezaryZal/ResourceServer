@@ -4,15 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Entity
-@Table(name = "users_to_hc")
+@Table(name = "users_hc")
 @Data
 @NoArgsConstructor
-public class UserToHc {
+public class UserHc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
