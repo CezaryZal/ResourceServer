@@ -1,14 +1,12 @@
 package com.CezaryZal.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users_app")
-@Data
-@NoArgsConstructor
+@Getter
 public class UserApp {
 
     @Id
