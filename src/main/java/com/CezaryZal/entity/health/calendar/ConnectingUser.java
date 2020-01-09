@@ -1,8 +1,8 @@
 package com.CezaryZal.entity.health.calendar;
 
-public class UserCreator {
+public class ConnectingUser {
 
-    public UserCreator(String loginName, String email) {
+    public ConnectingUser(String loginName, String email) {
         this.loginName = loginName;
         this.email = email;
     }

@@ -1,6 +1,6 @@
 package com.CezaryZal.test;
 
-import com.CezaryZal.entity.health.calendar.UserCreator;
+import com.CezaryZal.entity.health.calendar.ConnectingUser;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -30,22 +30,22 @@ public class TestController {
     }
 
     @GetMapping("/connection/object")
-    public ResponseEntity<UserCreator> getUserCreatorFromHcApplication(){
+    public ResponseEntity<ConnectingUser> getUserCreatorFromHcApplication(){
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<UserCreator> responseEntity = restTemplate.exchange(
+        ResponseEntity<ConnectingUser> responseEntity = restTemplate.exchange(
                 "http://localhost:8081/HealthCalendar/test/user",
                 HttpMethod.GET,
                 null,
-                UserCreator.class);
+                ConnectingUser.class);
 
         return responseEntity;
     }
 
     @GetMapping("/connection/login")
     public ResponseEntity<String> getLoginFromHc(){
-        UserCreator tmpUser = new UserCreator("Dzielny", "dziel@hh.com");
-        HttpEntity<UserCreator> httpEntity = new HttpEntity<>(tmpUser);
+        ConnectingUser tmpUser = new ConnectingUser("Dzielny", "dziel@hh.com");
+        HttpEntity<ConnectingUser> httpEntity = new HttpEntity<>(tmpUser);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(
