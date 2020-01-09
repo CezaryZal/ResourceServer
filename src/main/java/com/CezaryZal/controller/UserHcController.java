@@ -1,6 +1,6 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.UserHc;
+import com.CezaryZal.entity.health.calendar.UserAuthentication;
 import org.springframework.http.ResponseEntity;
 
 import javax.naming.NameNotFoundException;
@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface UserHcController {
 
-    ResponseEntity<UserHc> findById(Long id) throws NameNotFoundException;
+    ResponseEntity<UserAuthentication> findById(Long id) throws NameNotFoundException;
 
-    ResponseEntity<UserHc> findByLoginName(String loginName) throws NameNotFoundException;
+    ResponseEntity<UserAuthentication> findByLoginName(String loginName) throws NameNotFoundException;
 
-    List<UserHc> findAll();
+    List<UserAuthentication> findAll();
 
-    UserHc addNewUser(UserHc userHc);
+    UserAuthentication addNewUser(UserAuthentication userAuthentication);
 
-    UserHc updateUser(UserHc userHc);
+    UserAuthentication updateUser(UserAuthentication userAuthentication);
 
     void deleteUserById(Long index);
 }

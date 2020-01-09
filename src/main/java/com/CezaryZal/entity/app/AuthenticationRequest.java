@@ -1,4 +1,4 @@
-package com.CezaryZal.entity;
+package com.CezaryZal.entity.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

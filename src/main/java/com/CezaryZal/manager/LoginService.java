@@ -1,11 +1,11 @@
 package com.CezaryZal.manager;
 
-import com.CezaryZal.entity.UserHc;
-import com.CezaryZal.entity.AuthenticationRequest;
-import com.CezaryZal.manager.db.service.UserHcService;
+import com.CezaryZal.entity.health.calendar.UserAuthentication;
+import com.CezaryZal.entity.app.AuthenticationRequest;
+import com.CezaryZal.manager.health.calendar.service.UserHcAuthService;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
-import com.CezaryZal.manager.filters.validator.UserLoginValidatorService;
+import com.CezaryZal.manager.filters.validator.AuthReqValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +15,17 @@ import javax.security.auth.login.AccountNotFoundException;
 @Service
 public class LoginService {
 
-    private UserHcService userHCService;
+    private UserHcAuthService userHCAuthService;
     private TokenBuilder tokenBuilder;
-    private UserLoginValidatorService userLoginValidator;
+    private AuthReqValidatorService userLoginValidator;
     private PasswordComparator passwordComparator;
 
     @Autowired
-    public LoginService(UserHcService userHCService,
+    public LoginService(UserHcAuthService userHCAuthService,
                         TokenBuilder tokenBuilder,
-                        UserLoginValidatorService userLoginValidator,
+                        AuthReqValidatorService userLoginValidator,
                         PasswordComparator passwordComparator) {
-        this.userHCService = userHCService;
+        this.userHCAuthService = userHCAuthService;
         this.tokenBuilder = tokenBuilder;
         this.userLoginValidator = userLoginValidator;
         this.passwordComparator = passwordComparator;
@@ -33,19 +33,19 @@ public class LoginService {
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
         handleUserLogin(inputAuthenticationRequest);
-        UserHc foundUserHc = userHCService.findByLoginName(inputAuthenticationRequest.getLogin());
-        throwExceptionIfUserIsNotActive(foundUserHc);
-        passwordComparator.throwIfIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserHc.getPassword());
+        UserAuthentication foundUserAuthentication = userHCAuthService.findByLoginName(inputAuthenticationRequest.getLogin());
+        throwExceptionIfUserIsNotActive(foundUserAuthentication);
+        passwordComparator.throwIfIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserAuthentication.getPassword());
 
-        return tokenBuilder.buildTokenByUser(foundUserHc);
+        return tokenBuilder.buildTokenByUser(foundUserAuthentication);
     }
 
     private void handleUserLogin(AuthenticationRequest inputAuthenticationRequest) {
         userLoginValidator.validUserLogin(inputAuthenticationRequest);
     }
 
-    private void throwExceptionIfUserIsNotActive(UserHc foundUserHc) throws AccountNotFoundException {
-        if (!foundUserHc.isApproved()) {
+    private void throwExceptionIfUserIsNotActive(UserAuthentication foundUserAuthentication) throws AccountNotFoundException {
+        if (!foundUserAuthentication.isApproved()) {
             throw new AccountNotFoundException("The requested user has not been activated");
         }
     }

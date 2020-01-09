@@ -1,7 +1,7 @@
 package com.CezaryZal.controller;
 
-import com.CezaryZal.entity.UserHc;
-import com.CezaryZal.manager.db.service.UserHcService;
+import com.CezaryZal.entity.health.calendar.UserAuthentication;
+import com.CezaryZal.manager.health.calendar.service.UserHcAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,40 +13,40 @@ import java.util.List;
 @RequestMapping("/admin/user")
 public class UserHcControllerImp implements UserHcController {
 
-    private UserHcService userHCService;
+    private UserHcAuthService userHCAuthService;
 
     @Autowired
-    public UserHcControllerImp(UserHcService userHCService) {
-        this.userHCService = userHCService;
+    public UserHcControllerImp(UserHcAuthService userHCAuthService) {
+        this.userHCAuthService = userHCAuthService;
     }
 
     @GetMapping("/{index}")
-    public ResponseEntity<UserHc> findById(@PathVariable Long index) {
-        return new ResponseEntity<>(userHCService.findById(index), HttpStatus.OK);
+    public ResponseEntity<UserAuthentication> findById(@PathVariable Long index) {
+        return new ResponseEntity<>(userHCAuthService.findById(index), HttpStatus.OK);
     }
 
     @GetMapping("/name/{loginName}")
-    public ResponseEntity<UserHc> findByLoginName(@PathVariable String loginName) {
-        return new ResponseEntity<>(userHCService.findByLoginName(loginName), HttpStatus.OK);
+    public ResponseEntity<UserAuthentication> findByLoginName(@PathVariable String loginName) {
+        return new ResponseEntity<>(userHCAuthService.findByLoginName(loginName), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<UserHc> findAll() {
-        return userHCService.findAll();
+    public List<UserAuthentication> findAll() {
+        return userHCAuthService.findAll();
     }
 
     @PostMapping
-    public UserHc addNewUser(@RequestBody UserHc userHc) {
-        return userHCService.addNewUser(userHc);
+    public UserAuthentication addNewUser(@RequestBody UserAuthentication userAuthentication) {
+        return userHCAuthService.addNewUser(userAuthentication);
     }
 
     @PutMapping
-    public UserHc updateUser(@RequestBody UserHc userHc) {
-        return userHCService.updateUser(userHc);
+    public UserAuthentication updateUser(@RequestBody UserAuthentication userAuthentication) {
+        return userHCAuthService.updateUser(userAuthentication);
     }
 
     @DeleteMapping("/{index}")
     public void deleteUserById(@PathVariable Long index) {
-        userHCService.deleteUser(index);
+        userHCAuthService.deleteUser(index);
     }
 }

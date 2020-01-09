@@ -1,7 +1,7 @@
 package com.CezaryZal.authentication;
 
-import com.CezaryZal.entity.UserApp;
-import com.CezaryZal.manager.modifier.entity.ContainersCreatorOfUserHc;
+import com.CezaryZal.entity.app.UserApp;
+import com.CezaryZal.manager.modifier.entity.ContainersCreatorOfUserHcAuth;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,22 +10,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UserPrincipal implements UserDetails {
+public class UserAppPrincipal implements UserDetails {
 
     private UserApp userApp;
 
-    public UserPrincipal(UserApp userApp) {
+    public UserAppPrincipal(UserApp userApp) {
         this.userApp = userApp;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        ContainersCreatorOfUserHc containersCreatorOfUserHc = new ContainersCreatorOfUserHc();
+        ContainersCreatorOfUserHcAuth containersCreatorOfUserHcAuth = new ContainersCreatorOfUserHcAuth();
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         // Extract list of roles (ROLE_name)
         String roles = userApp.getRoles();
-        containersCreatorOfUserHc.getRoleList(roles).forEach(r -> {
+        containersCreatorOfUserHcAuth.getRoleList(roles).forEach(r -> {
             GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
             authorities.add(authority);
         });

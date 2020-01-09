@@ -1,6 +1,6 @@
 package com.CezaryZal.config;
 
-import com.CezaryZal.authentication.UserPrincipalDetailsService;
+import com.CezaryZal.authentication.UserAppPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserPrincipalDetailsService detailsService;
+    private UserAppPrincipalDetailsService detailsService;
     private PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService, PasswordEncoder passwordEncoder){
-        this.detailsService = userPrincipalDetailsService;
+    public SecurityConfig(UserAppPrincipalDetailsService userAppPrincipalDetailsService, PasswordEncoder passwordEncoder){
+        this.detailsService = userAppPrincipalDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
 

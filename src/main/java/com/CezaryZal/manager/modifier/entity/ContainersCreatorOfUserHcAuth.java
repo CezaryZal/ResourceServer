@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContainersCreatorOfUserHc {
+public class ContainersCreatorOfUserHcAuth {
 
     public List<String> getRoleList(String roles){
         if(roles.length() > 0){

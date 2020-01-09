@@ -1,6 +1,6 @@
 package com.CezaryZal.manager.filters.validator;
 
-import com.CezaryZal.entity.AuthenticationRequest;
+import com.CezaryZal.entity.app.AuthenticationRequest;
 import org.springframework.stereotype.Service;
 
 

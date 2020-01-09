@@ -1,4 +1,4 @@
-package com.CezaryZal.entity;
+package com.CezaryZal.entity.health.calendar;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "users_hc")
 @Data
 @NoArgsConstructor
-public class UserHc {
+public class UserAuthentication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
