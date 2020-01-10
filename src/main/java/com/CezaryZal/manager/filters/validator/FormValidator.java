@@ -14,6 +14,10 @@ public class FormValidator {
         return formUser == null;
     }
 
+    boolean isEmpty(String arg){
+        return arg == null;
+    }
+
     protected boolean throwIfIsToShort(String checkArgument) {
         return checkArgument.length() <= MIN_LENGTH;
     }

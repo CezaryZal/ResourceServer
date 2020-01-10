@@ -1,6 +1,5 @@
 package com.CezaryZal.manager;
 
-import com.CezaryZal.entity.FormUser;
 import com.CezaryZal.entity.health.calendar.ConnectingUser;
 import com.CezaryZal.entity.health.calendar.InputUser;
 import com.CezaryZal.entity.health.calendar.UserAuthentication;
@@ -12,7 +11,7 @@ import com.CezaryZal.manager.creator.NewUser;
 import com.CezaryZal.manager.health.calendar.service.UserHcAuthService;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
-import com.CezaryZal.manager.filters.validator.AuthReqValidatorService;
+import com.CezaryZal.manager.filters.validator.FormUserValidatorService;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class LoginService {
 
     private UserHcAuthService userHCAuthService;
     private TokenBuilder tokenBuilder;
-    private AuthReqValidatorService userLoginValidator;
+    private FormUserValidatorService userLoginValidator;
     private PasswordComparator passwordComparator;
     private AccountCreator accountCreator;
     private AuthRequestByUserConstant authRequestByUserConstant;
@@ -33,7 +32,7 @@ public class LoginService {
 
     public LoginService(UserHcAuthService userHCAuthService,
                         TokenBuilder tokenBuilder,
-                        AuthReqValidatorService userLoginValidator,
+                        FormUserValidatorService userLoginValidator,
                         PasswordComparator passwordComparator,
                         AccountCreator accountCreator,
                         AuthRequestByUserConstant authRequestByUserConstant,
@@ -50,7 +49,7 @@ public class LoginService {
     }
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
-        handleUserLogin(inputAuthenticationRequest);
+        userLoginValidator.handleAuthenticationRequest(inputAuthenticationRequest);
         UserAuthentication foundUserAuthentication = userHCAuthService.findByLoginName(inputAuthenticationRequest.getLoginName());
         throwExceptionIfUserIsNotActive(foundUserAuthentication);
         passwordComparator.throwIfIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserAuthentication.getPassword());
@@ -59,7 +58,7 @@ public class LoginService {
     }
 
     public String creteNewAccount(InputUser inputUser) throws AccountNotFoundException {
-        handleUserLogin(inputUser);
+        userLoginValidator.handleInputUser(inputUser);
         ConnectingUser connectingUser = new ConnectingUser(inputUser.getLoginName(), inputUser.getEmail());
 
         String clearToken = getTokenByUserLogin(authRequestByUserConstant.createAuthRequest());
@@ -68,10 +67,6 @@ public class LoginService {
         newUser.createNewUser(userIdFromHc, inputUser);
 
         return "Został stworzony nowy użytkownik";
-    }
-
-    private void handleUserLogin(FormUser inputFormUser) {
-        userLoginValidator.validUserLogin(inputFormUser);
     }
 
     private void throwExceptionIfUserIsNotActive(UserAuthentication foundUserAuthentication) throws AccountNotFoundException {
