@@ -1,6 +1,6 @@
 package com.CezaryZal.manager.filters.validator;
 
-import com.CezaryZal.entity.app.AuthenticationRequest;
+import com.CezaryZal.entity.FormUser;
 import com.CezaryZal.exceptions.NullInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,14 @@ public class AuthReqValidatorService {
         this.passwordFormValidator = passwordFormValidator;
     }
 
-    public void validUserLogin(AuthenticationRequest authenticationRequest) {
-            throwIfIsEmptyUserLogin(authenticationRequest);
-            loginFormValidator.validLogin(authenticationRequest.getLogin());
-            passwordFormValidator.validPassword(authenticationRequest.getPassword());
+    public void validUserLogin(FormUser formUser) {
+            throwIfIsEmptyUserLogin(formUser);
+            loginFormValidator.validLogin(formUser.getLoginName());
+            passwordFormValidator.validPassword(formUser.getPassword());
     }
 
-        private void throwIfIsEmptyUserLogin(AuthenticationRequest authenticationRequest){
-            if (loginFormValidator.isEmpty(authenticationRequest)) {
+        private void throwIfIsEmptyUserLogin(FormUser formUser){
+            if (loginFormValidator.isEmpty(formUser)) {
                 throw new NullInputException("User login is null");
             }
         }

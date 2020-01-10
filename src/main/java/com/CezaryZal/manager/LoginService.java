@@ -1,5 +1,6 @@
 package com.CezaryZal.manager;
 
+import com.CezaryZal.entity.FormUser;
 import com.CezaryZal.entity.health.calendar.ConnectingUser;
 import com.CezaryZal.entity.health.calendar.InputUser;
 import com.CezaryZal.entity.health.calendar.UserAuthentication;
@@ -50,7 +51,7 @@ public class LoginService {
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
         handleUserLogin(inputAuthenticationRequest);
-        UserAuthentication foundUserAuthentication = userHCAuthService.findByLoginName(inputAuthenticationRequest.getLogin());
+        UserAuthentication foundUserAuthentication = userHCAuthService.findByLoginName(inputAuthenticationRequest.getLoginName());
         throwExceptionIfUserIsNotActive(foundUserAuthentication);
         passwordComparator.throwIfIsNotEqualsPassword(inputAuthenticationRequest.getPassword(), foundUserAuthentication.getPassword());
 
@@ -58,6 +59,7 @@ public class LoginService {
     }
 
     public String creteNewAccount(InputUser inputUser) throws AccountNotFoundException {
+        handleUserLogin(inputUser);
         ConnectingUser connectingUser = new ConnectingUser(inputUser.getLoginName(), inputUser.getEmail());
 
         String clearToken = getTokenByUserLogin(authRequestByUserConstant.createAuthRequest());
@@ -68,8 +70,8 @@ public class LoginService {
         return "Został stworzony nowy użytkownik";
     }
 
-    private void handleUserLogin(AuthenticationRequest inputAuthenticationRequest) {
-        userLoginValidator.validUserLogin(inputAuthenticationRequest);
+    private void handleUserLogin(FormUser inputFormUser) {
+        userLoginValidator.validUserLogin(inputFormUser);
     }
 
     private void throwExceptionIfUserIsNotActive(UserAuthentication foundUserAuthentication) throws AccountNotFoundException {

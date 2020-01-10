@@ -1,13 +1,21 @@
 package com.CezaryZal.entity.app;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.CezaryZal.entity.FormUser;
 
-@Getter
-@AllArgsConstructor
-public class AuthenticationRequest {
+public class AuthenticationRequest extends FormUser {
 
-    private String login;
-    private String password;
+    public AuthenticationRequest(String loginName, String password) {
+        super(loginName, password);
+    }
+
+    @Override
+    public String getLoginName() {
+        return super.getLoginName();
+    }
+
+    @Override
+    public String getRoles() {
+        return super.getRoles();
+    }
 
 }

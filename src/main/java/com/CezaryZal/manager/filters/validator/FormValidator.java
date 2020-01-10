@@ -1,5 +1,6 @@
 package com.CezaryZal.manager.filters.validator;
 
+import com.CezaryZal.entity.FormUser;
 import com.CezaryZal.entity.app.AuthenticationRequest;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,8 @@ public class FormValidator {
 
     private static final int MIN_LENGTH = 3;
 
-    boolean isEmpty(AuthenticationRequest authenticationRequest) {
-        return authenticationRequest == null;
+    boolean isEmpty(FormUser formUser) {
+        return formUser == null;
     }
 
     protected boolean throwIfIsToShort(String checkArgument) {

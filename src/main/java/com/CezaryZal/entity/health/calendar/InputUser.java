@@ -1,12 +1,27 @@
 package com.CezaryZal.entity.health.calendar;
 
-import lombok.Getter;
+import com.CezaryZal.entity.FormUser;
 
-@Getter
-public class InputUser {
 
-    private String loginName;
-    private String password;
-    private String roles;
-    private String email;
+public class InputUser extends FormUser {
+
+    @Override
+    public String getLoginName() {
+        return super.getLoginName();
+    }
+
+    @Override
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    @Override
+    public String getRoles() {
+        return super.getRoles();
+    }
+
+    @Override
+    public String getEmail() {
+        return super.getEmail();
+    }
 }
