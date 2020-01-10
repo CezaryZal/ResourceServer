@@ -2,7 +2,6 @@ package com.CezaryZal.controller;
 
 import com.CezaryZal.entity.app.AuthenticationRequest;
 import com.CezaryZal.entity.health.calendar.InputUser;
-import com.CezaryZal.entity.health.calendar.UserAuthentication;
 import com.CezaryZal.manager.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +28,6 @@ public class LoginController {
 
     @PostMapping("/new-account")
     public ResponseEntity<String> getUserCreatorFromHcApplication(@RequestBody InputUser inputUser) throws AccountNotFoundException {
-        return new ResponseEntity<>(loginService.creteNewAccount(inputUser), HttpStatus.OK);
+        return new ResponseEntity<>(loginService.creteNewAccount(inputUser), HttpStatus.CREATED);
     }
 }

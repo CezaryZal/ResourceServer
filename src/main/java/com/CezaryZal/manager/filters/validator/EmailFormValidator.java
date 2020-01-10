@@ -17,7 +17,7 @@ public class EmailFormValidator extends FormValidator{
     }
 
     private void throwExceptionIfEmailIsNull(String email) {
-        if (isEmpty(email)){
+        if (isNull(email)){
             throw new NullInputException("Input email is null");
         }
     }

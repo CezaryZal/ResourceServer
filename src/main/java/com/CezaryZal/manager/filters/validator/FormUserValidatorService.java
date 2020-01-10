@@ -13,12 +13,15 @@ public class FormUserValidatorService {
     private LoginFormValidator loginFormValidator;
     private PasswordFormValidator passwordFormValidator;
     private EmailFormValidator emailFormValidator;
+    private RoleValidator roleValidator;
 
     @Autowired
-    public FormUserValidatorService(LoginFormValidator loginFormValidator, PasswordFormValidator passwordFormValidator, EmailFormValidator emailFormValidator) {
+    public FormUserValidatorService(LoginFormValidator loginFormValidator, PasswordFormValidator passwordFormValidator,
+                                    EmailFormValidator emailFormValidator, RoleValidator roleValidator) {
         this.loginFormValidator = loginFormValidator;
         this.passwordFormValidator = passwordFormValidator;
         this.emailFormValidator = emailFormValidator;
+        this.roleValidator = roleValidator;
     }
 
     public void handleAuthenticationRequest(AuthenticationRequest inputAuthenticationRequest) {
@@ -28,6 +31,7 @@ public class FormUserValidatorService {
     public void handleInputUser(InputUser inputUser){
         validLoginAndPassword(inputUser);
         emailFormValidator.validEmail(inputUser.getEmail());
+        roleValidator.validRole(inputUser.getRoles());
     }
 
     private void validLoginAndPassword(FormUser formUser) {
@@ -37,7 +41,7 @@ public class FormUserValidatorService {
     }
 
     private void throwIfIsEmptyUserLogin(FormUser formUser) {
-        if (loginFormValidator.isEmpty(formUser)) {
+        if (loginFormValidator.isNull(formUser)) {
             throw new NullInputException("User login is null");
         }
     }

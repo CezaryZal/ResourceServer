@@ -13,7 +13,7 @@ public class LoginFormValidator extends FormValidator {
     }
 
     private void throwExceptionIfLoginIsNull(String login) {
-        if (isEmpty(login)){
+        if (isNull(login)){
             throw new NullInputException("Input login is null");
         }
     }

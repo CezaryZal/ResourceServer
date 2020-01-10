@@ -10,11 +10,11 @@ public class FormValidator {
 
     private static final int MIN_LENGTH = 3;
 
-    boolean isEmpty(FormUser formUser) {
+    boolean isNull(FormUser formUser) {
         return formUser == null;
     }
 
-    boolean isEmpty(String arg){
+    boolean isNull(String arg){
         return arg == null;
     }
 

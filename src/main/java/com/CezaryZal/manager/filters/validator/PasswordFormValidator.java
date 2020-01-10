@@ -13,7 +13,7 @@ public class PasswordFormValidator extends FormValidator {
     }
 
     private void throwIfIsNullPassword(String password) {
-        if (isEmpty(password)) {
+        if (isNull(password)) {
             throw new NullInputException("Input password is null");
         }
     }
