@@ -28,7 +28,7 @@ public class LoginController {
     }
 
     @PostMapping("/new-account")
-    public ResponseEntity<String> getUserCreatorFromHcApplication(@RequestBody InputUser inputUser){
+    public ResponseEntity<String> getUserCreatorFromHcApplication(@RequestBody InputUser inputUser) throws AccountNotFoundException {
         return new ResponseEntity<>(loginService.creteNewAccount(inputUser), HttpStatus.OK);
     }
 }

@@ -5,12 +5,14 @@ import com.CezaryZal.entity.health.calendar.InputUser;
 import com.CezaryZal.entity.health.calendar.UserAuthentication;
 import com.CezaryZal.entity.app.AuthenticationRequest;
 import com.CezaryZal.manager.connector.AccountCreator;
+import com.CezaryZal.manager.creator.AuthRequestByUserConstant;
+import com.CezaryZal.manager.creator.HttpEntityByBodyAndToken;
+import com.CezaryZal.manager.creator.NewUser;
 import com.CezaryZal.manager.health.calendar.service.UserHcAuthService;
 import com.CezaryZal.manager.builder.TokenBuilder;
 import com.CezaryZal.manager.filters.comparator.PasswordComparator;
 import com.CezaryZal.manager.filters.validator.AuthReqValidatorService;
-import com.CezaryZal.manager.modifier.entity.Converter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -24,21 +26,26 @@ public class LoginService {
     private AuthReqValidatorService userLoginValidator;
     private PasswordComparator passwordComparator;
     private AccountCreator accountCreator;
-    private Converter converter;
+    private AuthRequestByUserConstant authRequestByUserConstant;
+    private HttpEntityByBodyAndToken httpEntityBodyToken;
+    private NewUser newUser;
 
-    @Autowired
     public LoginService(UserHcAuthService userHCAuthService,
                         TokenBuilder tokenBuilder,
                         AuthReqValidatorService userLoginValidator,
                         PasswordComparator passwordComparator,
                         AccountCreator accountCreator,
-                        Converter converter) {
+                        AuthRequestByUserConstant authRequestByUserConstant,
+                        HttpEntityByBodyAndToken httpEntityBodyToken,
+                        NewUser newUser) {
         this.userHCAuthService = userHCAuthService;
         this.tokenBuilder = tokenBuilder;
         this.userLoginValidator = userLoginValidator;
         this.passwordComparator = passwordComparator;
         this.accountCreator = accountCreator;
-        this.converter = converter;
+        this.authRequestByUserConstant = authRequestByUserConstant;
+        this.httpEntityBodyToken = httpEntityBodyToken;
+        this.newUser = newUser;
     }
 
     public String getTokenByUserLogin(AuthenticationRequest inputAuthenticationRequest) throws AccountNotFoundException {
@@ -50,12 +57,13 @@ public class LoginService {
         return tokenBuilder.buildTokenByUser(foundUserAuthentication);
     }
 
-    public String creteNewAccount(InputUser inputUser){
+    public String creteNewAccount(InputUser inputUser) throws AccountNotFoundException {
         ConnectingUser connectingUser = new ConnectingUser(inputUser.getLoginName(), inputUser.getEmail());
-        Long userIdFromHc = accountCreator.createAccountInHealthCalendarAndGetUserId(connectingUser);
-        UserAuthentication userAuth = converter.convertInputUserToUserAuth(inputUser);
-        userAuth.setUserId(userIdFromHc);
-        userHCAuthService.addNewUser(userAuth);
+
+        String clearToken = getTokenByUserLogin(authRequestByUserConstant.createAuthRequest());
+        HttpEntity<Object> httpEntity = httpEntityBodyToken.createHttpEntity(connectingUser, clearToken);
+        Long userIdFromHc = accountCreator.createAccountInHealthCalendarAndGetUserId(httpEntity);
+        newUser.createNewUser(userIdFromHc, inputUser);
 
         return "Został stworzony nowy użytkownik";
     }

@@ -1,6 +1,5 @@
 package com.CezaryZal.manager.connector;
 
-import com.CezaryZal.entity.health.calendar.ConnectingUser;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AccountCreator {
 
-
-    public Long createAccountInHealthCalendarAndGetUserId(ConnectingUser connectingUser){
-        HttpEntity<ConnectingUser> httpEntity = new HttpEntity<>(connectingUser);
+    public Long createAccountInHealthCalendarAndGetUserId(HttpEntity<Object> httpEntity){
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Long> responseEntity = restTemplate.exchange(

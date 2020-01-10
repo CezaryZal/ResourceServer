@@ -1,6 +1,6 @@
 package com.CezaryZal.manager.builder;
 
-import com.CezaryZal.authentication.SecurityConstants;
+import com.CezaryZal.constants.SecurityConstants;
 import com.CezaryZal.entity.health.calendar.UserAuthentication;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

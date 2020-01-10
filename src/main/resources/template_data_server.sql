@@ -21,7 +21,7 @@ CREATE TABLE `users_hc`
 INSERT INTO `users_hc` VALUES
 (1, 'tomek', '$2a$14$YMpWNeW5XrzvJnI/TuosWenErLQght/C56DhIE5BNkUs296PvPFLC', true, 'USER', 'ADD', 2),
 (2, 'janek', '$2a$14$qvPKR4sT9jI1svoxv/IbaOC0hQJ9sHDUkW5W9lsBCXKF84oWglyDa', true, 'VIEWER', 'ADD', 1),
-(3, 'czar', '$2a$14$XHvkIs6TbxrBM9msB31DI.M9OLHkfTDBBKcIsG56fLB0FZ3DtgB7a', true, 'ADMIN', 'ADD', 3);
+(3, 'czar', '$2a$10$aAIl0ih538I2tHl93BTUzuiQMZZbnzNIUyeM3/dkXc6MzQorLALe.', true, 'ADMIN', 'ADD', 3);
 
 
 DROP TABLE IF EXISTS `users_app`;

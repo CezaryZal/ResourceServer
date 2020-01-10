@@ -1,25 +1,39 @@
 package com.CezaryZal.test;
 
+import com.CezaryZal.entity.app.AuthenticationRequest;
 import com.CezaryZal.entity.health.calendar.ConnectingUser;
+import com.CezaryZal.manager.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/test")
 public class TestController {
 
+    private LoginService loginService;
+
+    @Autowired
+    public TestController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
     @GetMapping("/connection/text")
     public ResponseEntity<String> getStringFromHcApplication(){
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:8081/HealthCalendar/test/hello",
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                "http://localhost:8081/HealthCalendar/test/non/hello",
                 HttpMethod.GET,
                 null,
                 String.class);
@@ -29,14 +43,21 @@ public class TestController {
         return responseEntity;
     }
 
-    @GetMapping("/connection/object")
-    public ResponseEntity<ConnectingUser> getUserCreatorFromHcApplication(){
+    @GetMapping("/connection/token")
+    public ResponseEntity<ConnectingUser> getUserCreatorFromHcApplication() throws AccountNotFoundException {
+        AuthenticationRequest authRequest1 = new AuthenticationRequest("janek", "jan525");
+        String clearToken = loginService.getTokenByUserLogin(authRequest1);
+        String tmpToken = "Bearer " + clearToken;
+
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("authorization", tmpToken);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ConnectingUser> responseEntity = restTemplate.exchange(
-                "http://localhost:8081/HealthCalendar/test/user",
+                "http://localhost:8081/HealthCalendar/test/token/user",
                 HttpMethod.GET,
-                null,
+                httpEntity,
                 ConnectingUser.class);
 
         return responseEntity;
@@ -49,7 +70,7 @@ public class TestController {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(
-                "http://localhost:8081/HealthCalendar/test/get/login",
+                "http://localhost:8081/HealthCalendar/test/non/login",
                 HttpMethod.POST,
                 httpEntity,
                 String.class);
