@@ -4,6 +4,7 @@ import com.CezaryZal.entity.FormUser;
 import com.CezaryZal.entity.app.AuthenticationRequest;
 import com.CezaryZal.entity.health.calendar.InputUser;
 import com.CezaryZal.exceptions.NullInputException;
+import com.CezaryZal.manager.filters.comparator.LoginNameComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,19 @@ public class FormUserValidatorService {
     private PasswordFormValidator passwordFormValidator;
     private EmailFormValidator emailFormValidator;
     private RoleValidator roleValidator;
+    private LoginNameComparator loginNameComparator;
 
     @Autowired
-    public FormUserValidatorService(LoginFormValidator loginFormValidator, PasswordFormValidator passwordFormValidator,
-                                    EmailFormValidator emailFormValidator, RoleValidator roleValidator) {
+    public FormUserValidatorService(LoginFormValidator loginFormValidator,
+                                    PasswordFormValidator passwordFormValidator,
+                                    EmailFormValidator emailFormValidator,
+                                    RoleValidator roleValidator,
+                                    LoginNameComparator loginNameComparator) {
         this.loginFormValidator = loginFormValidator;
         this.passwordFormValidator = passwordFormValidator;
         this.emailFormValidator = emailFormValidator;
         this.roleValidator = roleValidator;
+        this.loginNameComparator = loginNameComparator;
     }
 
     public void handleAuthenticationRequest(AuthenticationRequest inputAuthenticationRequest) {
@@ -32,6 +38,7 @@ public class FormUserValidatorService {
         validLoginAndPassword(inputUser);
         emailFormValidator.validEmail(inputUser.getEmail());
         roleValidator.validRole(inputUser.getRoles());
+        loginNameComparator.throwIfInputLoginNameExists(inputUser.getLoginName());
     }
 
     private void validLoginAndPassword(FormUser formUser) {

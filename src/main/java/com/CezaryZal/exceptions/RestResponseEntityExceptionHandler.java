@@ -27,5 +27,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
+    @ExceptionHandler(LoginNameExistsException.class)
+    protected ResponseEntity<Object> handleLoginExistsException(RuntimeException ex, WebRequest request){
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
 
 }

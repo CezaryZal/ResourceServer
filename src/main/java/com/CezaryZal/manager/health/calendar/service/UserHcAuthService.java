@@ -12,6 +12,8 @@ public interface UserHcAuthService {
 
     List<UserAuthentication> findAll();
 
+    boolean isExistsUserAuthenticationByLoginName(String loginName);
+
     UserAuthentication addNewUser(UserAuthentication userAuthentication);
 
     UserAuthentication updateUser(UserAuthentication userAuthentication);

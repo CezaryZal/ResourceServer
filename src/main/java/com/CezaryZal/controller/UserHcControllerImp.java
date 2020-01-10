@@ -30,6 +30,11 @@ public class UserHcControllerImp implements UserHcController {
         return new ResponseEntity<>(userHCAuthService.findByLoginName(loginName), HttpStatus.OK);
     }
 
+    @GetMapping("/exist/{loginName}")
+    public boolean isExistsUserAuthenticationByLoginName(@PathVariable String loginName){
+        return userHCAuthService.isExistsUserAuthenticationByLoginName(loginName);
+    }
+
     @GetMapping
     public List<UserAuthentication> findAll() {
         return userHCAuthService.findAll();

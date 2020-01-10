@@ -31,6 +31,10 @@ public class UserHcAuthServiceImp implements UserHcAuthService {
                 .orElseThrow(() -> new UserNotFoundException("User not found by loginName"));
     }
 
+    public boolean isExistsUserAuthenticationByLoginName(String loginName){
+        return userHcAuthRepository.existsUserAuthenticationByLoginName(loginName);
+    }
+
     public List<UserAuthentication> findAll() {
         return (List<UserAuthentication>) userHcAuthRepository.findAll();
     }

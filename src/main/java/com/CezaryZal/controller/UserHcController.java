@@ -12,6 +12,8 @@ public interface UserHcController {
 
     ResponseEntity<UserAuthentication> findByLoginName(String loginName) throws NameNotFoundException;
 
+    boolean isExistsUserAuthenticationByLoginName(String loginName);
+
     List<UserAuthentication> findAll();
 
     UserAuthentication addNewUser(UserAuthentication userAuthentication);

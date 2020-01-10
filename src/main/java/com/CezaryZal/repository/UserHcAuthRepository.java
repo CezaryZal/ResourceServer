@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface UserHcAuthRepository extends CrudRepository<UserAuthentication, Long> {
 
     Optional<UserAuthentication> findByLoginName(String loginName);
+
+    boolean existsUserAuthenticationByLoginName(String loginName);
 }
