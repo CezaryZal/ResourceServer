@@ -4,28 +4,36 @@ import com.CezaryZal.exceptions.IncorrectRoleException;
 import com.CezaryZal.exceptions.NullInputException;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Component
 public class RoleValidator {
 
-    List<String> listRoles = Arrays.asList("ADMIN", "USER", "VIEWER");
-
-    void validRole(String role){
+    void validRole(String role) {
         throwIfRoleIsNull(role);
-        throwIfRoleIsIncorrect(role);
+        throwIfRoleIsIncorrect(isNotContains(role));
     }
 
-    private void throwIfRoleIsNull(String role){
-        if (role == null){
+    private void throwIfRoleIsNull(String role) {
+        if (role == null) {
             throw new NullInputException("Input role is null");
         }
     }
 
-    private void throwIfRoleIsIncorrect(String role){
-        if (!listRoles.contains(role)){
+    private void throwIfRoleIsIncorrect(boolean isNotContains) {
+        if (isNotContains){
             throw new IncorrectRoleException("The role sent is incorrect");
         }
+    }
+
+    private boolean isNotContains(String inputRole){
+        boolean contains = false;
+        Roles[] roles = Roles.values();
+
+        for (Roles role : roles) {
+            if (role.name().equalsIgnoreCase(inputRole)) {
+                contains = true;
+                break;
+            }
+        }
+        return !contains;
     }
 }

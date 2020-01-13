@@ -1,7 +1,7 @@
 package com.CezaryZal.test;
 
 import com.CezaryZal.entity.app.AuthenticationRequest;
-import com.CezaryZal.entity.health.calendar.ConnectingUser;
+import com.CezaryZal.entity.health.calendar.UserConnectingApps;
 import com.CezaryZal.manager.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -44,7 +44,7 @@ public class TestController {
     }
 
     @GetMapping("/connection/token")
-    public ResponseEntity<ConnectingUser> getUserCreatorFromHcApplication() throws AccountNotFoundException {
+    public ResponseEntity<UserConnectingApps> getUserCreatorFromHcApplication() throws AccountNotFoundException {
         AuthenticationRequest authRequest1 = new AuthenticationRequest("janek", "jan525");
         String clearToken = loginService.getTokenByUserLogin(authRequest1);
         String tmpToken = "Bearer " + clearToken;
@@ -54,19 +54,19 @@ public class TestController {
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ConnectingUser> responseEntity = restTemplate.exchange(
+        ResponseEntity<UserConnectingApps> responseEntity = restTemplate.exchange(
                 "http://localhost:8081/HealthCalendar/test/token/user",
                 HttpMethod.GET,
                 httpEntity,
-                ConnectingUser.class);
+                UserConnectingApps.class);
 
         return responseEntity;
     }
 
     @GetMapping("/connection/login")
     public ResponseEntity<String> getLoginFromHc(){
-        ConnectingUser tmpUser = new ConnectingUser("Dzielny", "dziel@hh.com");
-        HttpEntity<ConnectingUser> httpEntity = new HttpEntity<>(tmpUser);
+        UserConnectingApps tmpUser = new UserConnectingApps("Dzielny", "dziel@hh.com");
+        HttpEntity<UserConnectingApps> httpEntity = new HttpEntity<>(tmpUser);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(

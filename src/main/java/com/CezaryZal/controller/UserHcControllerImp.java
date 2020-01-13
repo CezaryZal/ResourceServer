@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 
 @RestController
@@ -21,12 +22,12 @@ public class UserHcControllerImp implements UserHcController {
     }
 
     @GetMapping("/{index}")
-    public ResponseEntity<UserAuthentication> findById(@PathVariable Long index) {
+    public ResponseEntity<UserAuthentication> findById(@PathVariable Long index) throws AccountNotFoundException {
         return new ResponseEntity<>(userHCAuthService.findById(index), HttpStatus.OK);
     }
 
     @GetMapping("/name/{loginName}")
-    public ResponseEntity<UserAuthentication> findByLoginName(@PathVariable String loginName) {
+    public ResponseEntity<UserAuthentication> findByLoginName(@PathVariable String loginName) throws AccountNotFoundException {
         return new ResponseEntity<>(userHCAuthService.findByLoginName(loginName), HttpStatus.OK);
     }
 

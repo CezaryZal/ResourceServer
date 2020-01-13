@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -28,8 +30,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler(LoginNameExistsException.class)
-    protected ResponseEntity<Object> handleLoginExistsException(RuntimeException ex, WebRequest request){
+    protected ResponseEntity<Object> handleLoginExistsException(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler({
+            AccountNotFoundException.class,
+            InvalidPasswordException.class})
+    protected ResponseEntity<Object> handleInvalidLoginException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex, "Login or password incorrectly entered", new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
 }

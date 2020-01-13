@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserAppPrincipal implements UserDetails {
 
-    private UserApp userApp;
+    private final UserApp userApp;
 
     public UserAppPrincipal(UserApp userApp) {
         this.userApp = userApp;

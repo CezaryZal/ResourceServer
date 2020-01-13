@@ -1,12 +1,12 @@
 package com.CezaryZal.manager.health.calendar.service;
 
 import com.CezaryZal.entity.health.calendar.UserAuthentication;
-import com.CezaryZal.exceptions.UserNotFoundException;
 import com.CezaryZal.repository.UserHcAuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 
 @Service
@@ -21,14 +21,14 @@ public class UserHcAuthServiceImp implements UserHcAuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserAuthentication findById(Long index) {
+    public UserAuthentication findById(Long index) throws AccountNotFoundException {
         return userHcAuthRepository.findById(index)
-                .orElseThrow(() -> new UserNotFoundException("User not found by id"));
+                .orElseThrow(() -> new AccountNotFoundException("User not found by id"));
     }
 
-    public UserAuthentication findByLoginName(String loginName) {
+    public UserAuthentication findByLoginName(String loginName) throws AccountNotFoundException {
         return userHcAuthRepository.findByLoginName(loginName)
-                .orElseThrow(() -> new UserNotFoundException("User not found by loginName"));
+                .orElseThrow(() -> new AccountNotFoundException("User not found by loginName"));
     }
 
     public boolean isExistsUserAuthenticationByLoginName(String loginName){

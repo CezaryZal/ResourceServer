@@ -23,7 +23,7 @@ public class EmailFormValidator extends FormValidator{
     }
 
     private void throwExceptionIfEmailIsInvalid(String email) {
-        if (isValid(email)) {
+        if (!isValid(email)) {
             throw new InvalidEmailFormException("Invalid email form");
         }
     }

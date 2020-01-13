@@ -2,7 +2,7 @@ package com.CezaryZal.manager.filters.validator;
 
 import com.CezaryZal.entity.FormUser;
 import com.CezaryZal.entity.app.AuthenticationRequest;
-import com.CezaryZal.entity.health.calendar.InputUser;
+import com.CezaryZal.entity.health.calendar.UserToHcApp;
 import com.CezaryZal.exceptions.NullInputException;
 import com.CezaryZal.manager.filters.comparator.LoginNameComparator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +34,11 @@ public class FormUserValidatorService {
         validLoginAndPassword(inputAuthenticationRequest);
     }
 
-    public void handleInputUser(InputUser inputUser){
-        validLoginAndPassword(inputUser);
-        emailFormValidator.validEmail(inputUser.getEmail());
-        roleValidator.validRole(inputUser.getRoles());
-        loginNameComparator.throwIfInputLoginNameExists(inputUser.getLoginName());
+    public void handleInputUser(UserToHcApp userToHcApp){
+        validLoginAndPassword(userToHcApp);
+        emailFormValidator.validEmail(userToHcApp.getEmail());
+        roleValidator.validRole(userToHcApp.getRoles());
+        loginNameComparator.throwIfInputLoginNameExists(userToHcApp.getLoginName());
     }
 
     private void validLoginAndPassword(FormUser formUser) {

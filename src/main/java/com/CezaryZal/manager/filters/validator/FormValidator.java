@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class FormValidator {
+public abstract class FormValidator {
 
     private static final int MIN_LENGTH = 3;
 

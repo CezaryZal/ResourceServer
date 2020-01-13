@@ -1,18 +1,18 @@
 package com.CezaryZal.manager.modifier.entity;
 
-import com.CezaryZal.entity.health.calendar.InputUser;
+import com.CezaryZal.entity.health.calendar.UserToHcApp;
 import com.CezaryZal.entity.health.calendar.UserAuthentication;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Converter {
+public class ConverterEntity {
 
-    public UserAuthentication convertInputUserToUserAuth(InputUser inputUser) {
+    public UserAuthentication convertInputUserToUserAuth(UserToHcApp userToHcApp) {
         UserAuthentication userAuth = new UserAuthentication();
-        userAuth.setLoginName(inputUser.getLoginName());
-        userAuth.setPassword(inputUser.getPassword());
+        userAuth.setLoginName(userToHcApp.getLoginName());
+        userAuth.setPassword(userToHcApp.getPassword());
         userAuth.setApproved(true);
-        userAuth.setRoles(inputUser.getRoles());
+        userAuth.setRoles(userToHcApp.getRoles());
         userAuth.setPermissions("NULL");
         return userAuth;
     }

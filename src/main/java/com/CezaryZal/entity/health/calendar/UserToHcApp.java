@@ -3,7 +3,7 @@ package com.CezaryZal.entity.health.calendar;
 import com.CezaryZal.entity.FormUser;
 
 
-public class InputUser extends FormUser {
+public class UserToHcApp extends FormUser {
 
     @Override
     public String getLoginName() {

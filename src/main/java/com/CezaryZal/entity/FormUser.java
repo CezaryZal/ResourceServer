@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FormUser {
+public abstract class FormUser {
 
     public FormUser(String loginName, String password) {
         this.loginName = loginName;
