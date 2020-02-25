@@ -1,6 +1,6 @@
 # SERVER RESOURCE 
 
-####Description
+#### Description
 
 The main task of the application is users authentication.
 Similarly, as it is done by *Gmail* (google server) or *Facebook*.
@@ -44,7 +44,7 @@ An additional application that takes over the authentication task does not
 increase the security of the main application. This causes an additional 
 overload on the network and server.
 
-####Usage
+#### Usage
 A swagger UI is implemented in the project that contains a basic API documentation.
 
 
